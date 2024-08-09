@@ -150,7 +150,7 @@ export default function UserTableRow({
         rel="noreferrer"
         href={`https://www.google.com/maps?q=${a.lat},${a.lon}`}
       >
-        {a.address}
+        {a.Address}
       </a>
     </small>
   );
@@ -246,7 +246,7 @@ const amountText = amt => {
           <Stack direction="row" alignItems="center" spacing={2}>
            
             <Typography variant="subtitle2" noWrap onKeyDown={handleKeyDown} onClick={handleModalOpen} role="button"  tabIndex={0}>
-           <span> <span ><b>{uid}</b> [S/N: {serial}]</span><br/><small className="text-muted">zone: {zone} / ward: {ward} / beat: {beat}</small><br/>{address(m)}</span>
+           <span> <span ><b>{m.uid}</b> [S/N: {m.UID}]</span><br/><small className="text-muted">city: {m.City} / zone: {m.Location} / ward: {m.UID} </small><br/>{address(m)}</span>
             </Typography>
           </Stack>
         </TableCell>

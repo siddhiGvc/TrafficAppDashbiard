@@ -53,14 +53,14 @@ export default function UserTableRow({
           <Stack direction="row" alignItems="center" spacing={2}>
             {/* <Avatar alt={name} src="" /> */}
             <Typography variant="subtitle2" noWrap>
-              {row.serial}
+              {row.UID}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{row.uid}</TableCell>
+        <TableCell>{row.City}</TableCell>
     
-        <TableCell>{zone}</TableCell>
+        <TableCell>{row.Location}</TableCell>
         <TableCell>{ward}</TableCell>
         <TableCell>{beat}</TableCell>
       

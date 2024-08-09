@@ -171,24 +171,24 @@ export default function UserPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'sr', label: 'Sr.No' },
-                  { id: 'machine', label: `${machineType==="RECD" ? "Machine Details":"Machine" }` },
+                  { id: 'machine', label: `${machineType==="RECD" ? "Machine Details":"Junction" }` },
                   { id: 'status', label: 'Status' },
                   ...(machineType !== "Incinerator"
-                  ? [{ id: 'stockStatus',  label: `${machineType==="RECD" ? "Temperature":"Stock Status" }`}]
+                  ? [{ id: 'stockStatus',  label: `${machineType==="RECD" ? "Temperature":"Lamps" }`}]
                   : []),
                   ...(machineType !== "Vending"
-                  ? [  { id: 'burnStatus', label: `${machineType==="RECD" ? "Pressure":"Burning Status" }` }]
+                  ? [  { id: 'burnStatus', label: `${machineType==="RECD" ? "Pressure":"Green Roads" }` }]
                   : []),
                 
-                  { id: 'doorStatus', label: `${machineType==="RECD" ? "Diffrential":"Door Status" }`},
-                  ...(machineType === "RECD"
-                  ? [  { id: 'burnStatus', label: `${machineType==="RECD" ? "Temper":"Burning Status" }` }]
-                  : []),
+                  // { id: 'doorStatus', label: `${machineType==="RECD" ? "Diffrential":"Door Status" }`},
+                  // ...(machineType === "RECD"
+                  // ? [  { id: 'burnStatus', label: `${machineType==="RECD" ? "Temper":"Burning Status" }` }]
+                  // : []),
                   { id: 'info', label: 'Info' },
                 
                   // { id: 'ward', label: 'Verified', align: 'center' },
                   // { id: 'city', label: 'Status' },
-                  // { id: '' },
+                   { id: '' },
                 ]}
               />
               <TableBody>

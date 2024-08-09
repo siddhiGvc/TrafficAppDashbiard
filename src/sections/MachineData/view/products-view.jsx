@@ -109,37 +109,37 @@ export default function ProductsView() {
   const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
   
   //  caheckin machine is online or not
-  const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
+  // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 
   // calculated amount as lacks , coror, thound
-  const amountText = amt => {
-    amt = amt || 0;
+//   const amountText = amt => {
+//     amt = amt || 0;
  
-    if(amt>=10000000) {
-        const cr = parseInt(amt / 100000, 10) / 100;
-        const Cr = parseFloat(cr.toFixed(2));
-        return `${Cr} Cr`;
-    } 
-    if(amt>=1000000) {
-        const l = parseInt(amt / 1000 ,10) / 100;
-        const L = parseFloat(l.toFixed(6));
-        return  `${L} L`;
-    } 
-    if(amt>=1000) {
-        const k = parseInt(amt / 10 ,10) / 100;
-        const K = parseFloat(k.toFixed(2));
-        return  `${K} K`;
-    }
+//     if(amt>=10000000) {
+//         const cr = parseInt(amt / 100000, 10) / 100;
+//         const Cr = parseFloat(cr.toFixed(2));
+//         return `${Cr} Cr`;
+//     } 
+//     if(amt>=1000000) {
+//         const l = parseInt(amt / 1000 ,10) / 100;
+//         const L = parseFloat(l.toFixed(6));
+//         return  `${L} L`;
+//     } 
+//     if(amt>=1000) {
+//         const k = parseInt(amt / 10 ,10) / 100;
+//         const K = parseFloat(k.toFixed(2));
+//         return  `${K} K`;
+//     }
 
-    // Remove the unnecessary else statement
-    return amt;
-}
-
-
+//     // Remove the unnecessary else statement
+//     return amt;
+// }
 
 
-const sum = (a, b) => a + b;
+
+
+// const sum = (a, b) => a + b;
 
   return (
     <Container maxWidth='xxl'>
@@ -156,18 +156,18 @@ const sum = (a, b) => a + b;
       <Grid   xs={12} md={12} lg={9.3} >
         <Stack  container spacing='1' display='flex' flexWrap='wrap' direction='row' justifyContent='space-evenly' >
           {/* total machines ui */}
-        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :6}>
           <MachineCard
-            title="Total Machines"
+            title="Total Junctions"
             total={data.dataAll.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
           />
         </Grid>
           {/* online machines ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :6}>
           <MachineCard
-            title="Online Machines"
+            title="Online Junctions"
             total={data.data.filter(filterOnline).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}
@@ -175,66 +175,66 @@ const sum = (a, b) => a + b;
         </Grid>
          
          {/* total collection ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <MachineCard
             title={machineType ==="RECD" ? "Defective Sensor":"Total Collection"}
             total={data.data.length ?amountText(data.dataAll.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):0}
             color="info"
             icon={<img alt="icon" src="/assets/icons/collection.png" />}
           />
-        </Grid>
+        </Grid> */}
         
         {/* item dispensed ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <MachineCard
             title={machineType ==="RECD" ? "Tempered":"Item Dispensed"}
             total={data.data.length ?(data.dataAll.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):0}
             color="error"
             icon={<img alt="icon" src="/assets/icons/items.png" />}
           />
-        </Grid>
+        </Grid> */}
         {/* </Stack> */}
         {/* <Stack  container spacing="1" display='flex' flexWrap='wrap' direction='row' justifyContent='space-evenly'> */}
            {/* emty stock ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <MachineCard
             title="Stock Empty"
             total={data.data.filter(online).filter(m => m.spiral_a_status === 0).map(q => 1).length?data.data.filter(online).filter(m => m.spiral_a_status === 0).map(q => 1).reduce(sum):0}
             color="success"
             icon={<img alt="icon" src="/assets/icons/EmptyStock.png" />}
           />
-        </Grid>
+        </Grid> */}
          
          {/* low stock ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <MachineCard
             title="Low Stock"
             total={data.data.filter(online).filter(m => m.spiral_a_status === 1).map(q => 1).length?data.data.filter(online).filter(m => m.spiral_a_status === 1).map(q => 1).reduce(sum):0}
             color="info"
             icon={<img alt="icon" src="/assets/icons/LowStock.png" />}
           />
-        </Grid>
+        </Grid> */}
         
         {/* burning enabled ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
           <MachineCard
             title="Burning Enabled"
             total={data.data.filter(online).filter(m => m.burn_status === 1).map(q => 1).length?data.data.filter(online).filter(m => m.burn_status === 1).map(q => 1).reduce(sum):0}
             color="info"
             icon={<img alt="icon" src="/assets/icons/Burning.png" />}
           />
-        </Grid>
+        </Grid> */}
 
         {/* burning cycles ui */}
 
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
           <MachineCard
             title="Total Burning Cycles"
             total={data.data.map(q => (q.burnCycleCurrent+q.burnCycleLife)).length ?  data.data.map(q => (q.burnCycleCurrent+q.burnCycleLife)).reduce(sum):0}
             color="error"
             icon={<img alt="icon" src="/assets/icons/BurningCycles.png" />}
           />
-        </Grid>
+        </Grid> */}
         </Stack>
       </Grid>
       </Grid>

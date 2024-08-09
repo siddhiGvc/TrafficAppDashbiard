@@ -6,7 +6,7 @@ export const AllMachines=async()=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine`, { method: 'GET', headers });
+      const response = await fetch(`${API}/add/getAlltrafficLights`, { method: 'GET', headers });
       const json = await response.json();
       return json.data;
     } catch (error) {

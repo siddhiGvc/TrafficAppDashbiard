@@ -53,7 +53,7 @@ export default function Router() {
         </DashboardLayout>
       ),
       children: [
-        {path: 'dashboard', element: <IndexPage />},
+        {path: 'dashboard', element: < IndexPage/>},
         { path: 'user', element: <UserPage /> },
         { path: 'machines', element: <MachinePage/> },
         { path: 'machineData', element: <ProductsView /> },

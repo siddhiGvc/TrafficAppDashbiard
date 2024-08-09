@@ -109,7 +109,7 @@ export default function MachinePage() {
     // getting data from fecthData function
     AllMachines().then((res)=>{
     
-      setMachines(res);
+      setMachines(res.data);
     })
     if(UserInfo.clientName)
   {
@@ -147,9 +147,9 @@ export default function MachinePage() {
         const data = response;
   
         // Transform data into the format expected by Select2
-        const formattedData = data.map(option => ({
-          value: option.serial,
-          label: option.serial
+        const formattedData = data.data.map(option => ({
+          value: option.UID,
+          label: option.UID
         }));
   
         // Set the options for the dropdown
@@ -338,9 +338,10 @@ export default function MachinePage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'id', label: 'Sr.No' },
-                  { id: 'name', label: 'Serial'},
-                  { id: 'email', label: 'Uid' },
-                  { id: 'zone', label: `${cInfo[1]}` },
+                  { id: 'UID', label: 'UID'},
+                  { id: 'Location', label: 'Location' },
+                  { id: 'City', label: 'City' },
+                  { id: 'ward', label: `${cInfo[1]}` },
                   { id: 'ward', label: `${cInfo[2]}` },
                   { id: 'beat', label: `${cInfo[3]}` },
                   // { id: 'ward', label: 'Verified', align: 'center' },
@@ -411,7 +412,7 @@ export default function MachinePage() {
                 <div className="row">
                     <div className="col-md-6">
                         <div className="form-group my-2">
-                            <h6>Machine No. (PCB No.):</h6>
+                            <h6>UID:</h6>
                             <Select
                                 name="machine"
                                 value={selectedOption}
@@ -424,13 +425,7 @@ export default function MachinePage() {
                             <div className="invalid-feedback"/>
                         </div>
                     </div>
-                    <div className="col-md-6">
-                        <div className="form-group my-2">
-                            <h6>UID:</h6>
-                            <input type="text" className="form-control" name="uid" />
-                            <div className="invalid-feedback"/>
-                        </div>
-                    </div>
+                  
                     <div className="col-md-6">
                         <div className="form-group my-2">
                             <h6>City:</h6>
@@ -446,7 +441,7 @@ export default function MachinePage() {
                     </div>
                     <div className="col-md-6">
                         <div className="form-group my-2">
-                            <h6>Installed On:</h6>
+                            <h6>Location:</h6>
                             <input className="form-control" type="date" name="installedOn" />
                             <div className="invalid-feedback"/>
                         </div>

@@ -16,12 +16,12 @@ export const getAllData = async () => {
       const city=JSON.parse(sessionStorage.getItem("cities"));
       const zone=JSON.parse(sessionStorage.getItem("zones"));
       const ward=JSON.parse(sessionStorage.getItem("wards"));
-      const beat=JSON.parse(sessionStorage.getItem("beats"))
+      // const beat=JSON.parse(sessionStorage.getItem("beats"))
       const machineStatus=JSON.parse(sessionStorage.getItem("machineStatus"));
-      const stockStatus=JSON.parse(sessionStorage.getItem('stockStatus'));
-      const burn_status=JSON.parse(sessionStorage.getItem('burnStatus'))
+      // const stockStatus=JSON.parse(sessionStorage.getItem('stockStatus'));
+      // const burn_status=JSON.parse(sessionStorage.getItem('burnStatus'))
   
-      const response = await fetch(`${API}/api/machine/data?city=${city.join()}&zone=${zone.join()}&ward=${ward.join()}&beat=${beat.join()}&status=${machineStatus.join()}&burn_status=${burn_status.join()}&stock_status=${stockStatus.join()}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/add/getData?city=${city.join()}&location=${zone.join()}&uid=${ward.join()}&status=${machineStatus.join()}`, { method: 'GET', headers });
       const json = await response.json();
       // console.log(json.data);
 
@@ -48,7 +48,7 @@ export const zoneData=async(city)=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine/master/zone?city=${city}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/add/getLocations?city=${city}`, { method: 'GET', headers });
       const json = await response.json();
       return json.data;
     } catch (error) {
@@ -65,7 +65,7 @@ export const zoneData=async(city)=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine/master/ward?city=${city}&zone=${zone}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/add/getUid?city=${city}&location=${zone}`, { method: 'GET', headers });
       const json = await response.json();
       return json.data;
     } catch (error) {

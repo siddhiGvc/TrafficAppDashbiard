@@ -1,4 +1,4 @@
-import $ from 'jquery';
+// import $ from 'jquery';
 import moment from "moment";
 import {  useState,useEffect } from 'react';
 
@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { getAllData } from "src/_mock/fildData";
 // import { products } from 'src/_mock/products';
 // import { UserView } from 'src/sections/machineDataTable/view';
-import {GetClentNameDetails} from 'src/_mock/customers';
+// import {GetClentNameDetails} from 'src/_mock/customers';
 
 import Map from "../map";
 import MachineCard from '../machine-card';
@@ -42,7 +42,7 @@ export default function MachineMapView() {
   // const [mapData,setMapData]=useState(null);
   const [center,setCenter]=useState(null);
   const [locations,setLocations]=useState(null);
-  const [machineType,setMachineType]=useState('');
+  const [machineType]=useState('');
   // getting data from file 'src/Redux/store'
   store.subscribe(() => {
     // store in data hook
@@ -69,24 +69,24 @@ export default function MachineMapView() {
 
 
   useEffect(()=>{
-    const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
-     const Obj={
-      clientName:UserInfo.clientName
-     }
-    GetClentNameDetails(Obj).then((r)=>{
-      // const MachineType=r.data[0].MachineType
-      const [{ MachineType }] = r.data;
-      if(MachineType==="Incinerator")
-      {
-        $('.vending').remove();
-      }
-      else if(MachineType==="Vending")
-      {
-        $('.incinerator').remove();
-      }
-      setMachineType(MachineType);
+    // const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+    //  const Obj={
+    //   clientName:UserInfo.clientName
+    //  }
+    // GetClentNameDetails(Obj).then((r)=>{
+    //   // const MachineType=r.data[0].MachineType
+    //   const [{ MachineType }] = r.data;
+    //   if(MachineType==="Incinerator")
+    //   {
+    //     $('.vending').remove();
+    //   }
+    //   else if(MachineType==="Vending")
+    //   {
+    //     $('.incinerator').remove();
+    //   }
+    //   setMachineType(MachineType);
 
-    })
+    // })
 
     
       setTimeout(()=>{
@@ -98,15 +98,15 @@ export default function MachineMapView() {
                 if(Data.length>0)
                 {
                   console.log(Data);
-        const Lat=Data[index].lat;
-       const Lon=Data[index].lon;
-       const centers=[Lat,Lon];
+        const lat=Data[index].Lat;
+       const Lon=Data[index].Long;
+       const centers=[lat,Lon];
 
         const location=[];
        for(let i=0;i<Data.length;i+=1)
        {
        
-       const obj={ data:Data[i], coordinates: [Data[i].lat,Data[i].lon] }
+       const obj={ data:Data[i], coordinates: [Data[i].Lat,Data[i].Long] }
        location.push(obj);
 
        }
@@ -128,37 +128,37 @@ export default function MachineMapView() {
   const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
   
   //  caheckin machine is online or not
-  const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
+  // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 
   // calculated amount as lacks , coror, thound
-  const amountText = amt => {
-    amt = amt || 0;
+//   const amountText = amt => {
+//     amt = amt || 0;
  
-    if(amt>=10000000) {
-        const cr = parseInt(amt / 100000, 10) / 100;
-        const Cr = parseFloat(cr.toFixed(2));
-        return `${Cr} Cr`;
-    } 
-    if(amt>=1000000) {
-        const l = parseInt(amt / 1000 ,10) / 100;
-        const L = parseFloat(l.toFixed(6));
-        return  `${L} L`;
-    } 
-    if(amt>=1000) {
-        const k = parseInt(amt / 10 ,10) / 100;
-        const K = parseFloat(k.toFixed(2));
-        return  `${K} K`;
-    }
+//     if(amt>=10000000) {
+//         const cr = parseInt(amt / 100000, 10) / 100;
+//         const Cr = parseFloat(cr.toFixed(2));
+//         return `${Cr} Cr`;
+//     } 
+//     if(amt>=1000000) {
+//         const l = parseInt(amt / 1000 ,10) / 100;
+//         const L = parseFloat(l.toFixed(6));
+//         return  `${L} L`;
+//     } 
+//     if(amt>=1000) {
+//         const k = parseInt(amt / 10 ,10) / 100;
+//         const K = parseFloat(k.toFixed(2));
+//         return  `${K} K`;
+//     }
 
-    // Remove the unnecessary else statement
-    return amt;
-}
-
-
+//     // Remove the unnecessary else statement
+//     return amt;
+// }
 
 
-const sum = (a, b) => a + b;
+
+
+// const sum = (a, b) => a + b;
 
   return (
     <Container maxWidth='xxl'>
@@ -175,7 +175,7 @@ const sum = (a, b) => a + b;
       <Grid   xs={12} md={12} lg={9.3} >
         <Stack  container spacing='1' display='flex' flexWrap='wrap' direction='row' justifyContent='space-evenly' >
           {/* total machines ui */}
-        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :6}>
          
           <MachineCard
             title="Total Machines"
@@ -186,7 +186,7 @@ const sum = (a, b) => a + b;
            
         </Grid>
           {/* online machines ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :6}>
           <MachineCard
             title="Online Machines"
             total={data.data.filter(filterOnline).length}
@@ -196,7 +196,7 @@ const sum = (a, b) => a + b;
         </Grid>
          
          {/* total collection ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <div className="vending">
           <MachineCard
             title={machineType ==="RECD" ? "Defective Sensor":"Total Collection"}
@@ -205,10 +205,10 @@ const sum = (a, b) => a + b;
             icon={<img alt="icon" src="/assets/icons/collection.png" />}
           />
            </div>
-        </Grid>
+        </Grid> */}
         
         {/* item dispensed ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
         <div className="vending">
           <MachineCard
             title={machineType ==="RECD" ? "Tempered":"Item Dispensed"}
@@ -217,11 +217,11 @@ const sum = (a, b) => a + b;
             icon={<img alt="icon" src="/assets/icons/items.png" />}
           />
           </div>
-        </Grid>
+        </Grid> */}
         {/* </Stack> */}
         {/* <Stack  container spacing="1" display='flex' flexWrap='wrap' direction='row' justifyContent='space-evenly'> */}
            {/* emty stock ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <div className="vending">
           <MachineCard
             title="Stock Empty"
@@ -230,10 +230,10 @@ const sum = (a, b) => a + b;
             icon={<img alt="icon" src="/assets/icons/EmptyStock.png" />}
           />
             </div>
-        </Grid>
+        </Grid> */}
          
          {/* low stock ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <div className="vending">
           <MachineCard
             title="Low Stock"
@@ -242,10 +242,10 @@ const sum = (a, b) => a + b;
             icon={<img alt="icon" src="/assets/icons/LowStock.png" />}
           />
           </div>
-        </Grid>
+        </Grid> */}
         
         {/* burning enabled ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
         <div className="incinerator">
           <MachineCard
             title="Burning Enabled"
@@ -254,10 +254,10 @@ const sum = (a, b) => a + b;
             icon={<img alt="icon" src="/assets/icons/Burning.png" />}
           />
           </div>
-        </Grid>
+        </Grid> */}
 
         {/* burning cycles ui */}
-
+{/* 
         <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
         <div className="incinerator">
           <MachineCard
@@ -267,7 +267,7 @@ const sum = (a, b) => a + b;
             icon={<img alt="icon" src="/assets/icons/BurningCycles.png" />}
           />
           </div>
-        </Grid>
+        </Grid> */}
         </Stack>
       </Grid>
       </Grid>

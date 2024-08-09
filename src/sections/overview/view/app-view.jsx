@@ -17,13 +17,14 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 // import AppTasks from '../app-tasks';
 // import AppNewsUpdate from '../app-news-update';
-import { GetClentNameDetails } from "src/_mock/customers";
+// import { GetClentNameDetails } from "src/_mock/customers";
 
-import {fetchData} from "../../../_mock/machineData";
+
 // import AppOrderTimeline from '../app-order-timeline';
 import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
+import {fetchData,fetchInverter} from "../../../_mock/machineData";
 
 // import AppTrafficBySite from '../app-traffic-by-site';
 // import AppCurrentSubject from '../app-current-subject';
@@ -37,56 +38,71 @@ import AppWidgetSummary from '../app-widget-summary';
 // const UserInfo=JSON.parse(sessionStorage.getItem("userInfo")) || [] ;
 export default function AppView() {
   // const [cities,setCities]=useState([]);
-  const [pathName,setPathName]=useState({data:[],dataAll:[]});
-  const [machineType,setMachineType]=useState('');
+  const [pathName,setPathName]=useState([]);
+  const [inverterData,setInverterData]=useState([]);
+  // const [setMachineType]=useState('');
  
 
   // calling for api data
-  const LoadData=()=>{
-    const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
-       console.log(UserInfo);
+  // const LoadData=()=>{
+  //   const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+  //      console.log(UserInfo);
 
-       if(UserInfo.clientName)
-       {
-        const obj={
-          clientName:UserInfo.clientName
-        }
-        GetClentNameDetails(obj).then((r)=>{
-          const [{ MachineType }] = r.data;
-          setMachineType(MachineType);
-        })
-       }
+  //      if(UserInfo.clientName)
+  //      {
+  //       const obj={
+  //         clientName:UserInfo.clientName
+  //       }
+  //       GetClentNameDetails(obj).then((r)=>{
+  //         const [{ MachineType }] = r.data;
+  //         setMachineType(MachineType);
+  //       })
+  //      }
    
-      const Cities=(UserInfo.city).split(',') || [''];
-         if(Cities[0]==="null")
-         {
-          Cities[0]=" "
-         }
-         console.log(Cities);
-    // const city=JSON.parse(sessionStorage.getItem("userCity"));
-    fetchData(Cities).then((res)=>{
-      setPathName(res);
+  //     const Cities=(UserInfo.City).split(',') || [''];
+  //        if(Cities[0]==="null")
+  //        {
+  //         Cities[0]=" "
+  //        }
+  //        console.log(Cities);
+  //   // const city=JSON.parse(sessionStorage.getItem("userCity"));
+  //   fetchData(Cities).then((res)=>{
+  //     console.log(res);
+  //     setPathName(res);
     
-    });
+  //   });
   
    
-  };
+  // };
 
  
 
   // calling loadData every 5 seconds
   useEffect(() => {
   
-    LoadData();
+    // LoadData();
     
-    const interval=setInterval(()=>{
-       LoadData();
+    // const interval=setInterval(()=>{
+    //    LoadData();
      
-    },5000)
+    // },5000)
+    
+    fetchData().then((res)=>{
+    
+      console.log(res);
+      setPathName(res);
+    
+    });
+    fetchInverter().then((res)=>{
+    
+      console.log(res);
+      setInverterData(res);
+    
+    });
 
-    return(()=>{
-      clearInterval(interval);
-    })
+    // return(()=>{
+    //   clearInterval(interval);
+    // })
   
 
  
@@ -101,39 +117,39 @@ export default function AppView() {
 
 
   // filtering onlines machines
-  const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
+  const filterOnline = q => moment().diff(moment.utc((q.lastHeartBeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
   
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 
   // converting value in the form of lacks, thousand ,Coror
-  const amountText = amt => {
-    amt = amt || 0;
+//   const amountText = amt => {
+//     amt = amt || 0;
  
-    if(amt>=10000000) {
-        const cr = parseInt(amt / 100000, 10) / 100;
-        const Cr = parseFloat(cr.toFixed(2));
-        return `${Cr} Cr`;
-    } 
-    if(amt>=1000000) {
-        const l = parseInt(amt / 1000 ,10) / 100;
-        const L = parseFloat(l.toFixed(6));
-        return  `${L} L`;
-    } 
-    if(amt>=1000) {
-        const k = parseInt(amt / 10 ,10) / 100;
-        const K = parseFloat(k.toFixed(2));
-        return  `${K} K`;
-    }
+//     if(amt>=10000000) {
+//         const cr = parseInt(amt / 100000, 10) / 100;
+//         const Cr = parseFloat(cr.toFixed(2));
+//         return `${Cr} Cr`;
+//     } 
+//     if(amt>=1000000) {
+//         const l = parseInt(amt / 1000 ,10) / 100;
+//         const L = parseFloat(l.toFixed(6));
+//         return  `${L} L`;
+//     } 
+//     if(amt>=1000) {
+//         const k = parseInt(amt / 10 ,10) / 100;
+//         const K = parseFloat(k.toFixed(2));
+//         return  `${K} K`;
+//     }
 
-    // Remove the unnecessary else statement
-    return amt;
-}
+//     // Remove the unnecessary else statement
+//     return amt;
+// }
 
 
 
  // calulating some of two numbers
- const sum = (a, b) => a + b;
+//  const sum = (a, b) => a + b;
 
   
 
@@ -146,39 +162,56 @@ export default function AppView() {
         {/* total Machines */}
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Total Machines"
-            total={pathName.dataAll.length}
+            title="Total Junctions"
+            total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
           />
-        </Grid>
+        </Grid> 
          {/* online machines */}
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Online Machines"
-            total={pathName.data.filter(filterOnline).length}
+            title="Online Junctions"
+            total={pathName.filter(filterOnline).length}
+            color="info"
+            icon={<img alt="icon" src="/assets/icons/online.png" />}
+          />
+        </Grid>
+        <Grid xs={12} sm={6} md={3}>
+          <AppWidgetSummary
+            title="Total Inverters"
+            total={inverterData.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+          />
+        </Grid> 
+         {/* online machines */}
+        <Grid xs={12} sm={6} md={3}>
+          <AppWidgetSummary
+            title="Online Inverters"
+            total={inverterData.filter(filterOnline).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}
           />
         </Grid>
         {/* total collection */}
-        <Grid xs={12} sm={6} md={3}>
+        {/* <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title={machineType==="RECD" ? "Defective Sensor" :"Total Collections"}
-            total={pathName.data.length ?amountText(pathName.dataAll.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):'...'}
+            total={pathName.length ?amountText(pathName.dataAll.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):'...'}
             color="info"
             icon={<img alt="icon" src="/assets/icons/collection.png" />}
           />
-        </Grid>
+        </Grid> */}
            {/* item dispensed */}
-        <Grid xs={12} sm={6} md={3}>
+        {/* <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title={machineType==="RECD" ? "Tempered" :"Item Dispnesed"}
             total={pathName.data.length ?(pathName.dataAll.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):'...'}
             color="error"
             icon={<img alt="icon" src="/assets/icons/items.png" />}
           />
-        </Grid>
+        </Grid> */}
 
         {/* Machine Status */}
         <Grid xs={12} md={6} lg={6}>
@@ -186,8 +219,25 @@ export default function AppView() {
             title="Machine Status"
             chart={{
               series: [
-                { label: 'Online', value:pathName.data.filter(filterOnline).length||0 },
-                { label: 'Offline', value:(pathName.data.length - pathName.data.filter(filterOnline).length) ||0},
+                { label: 'Online', value:pathName.filter(filterOnline).length||0 },
+                { label: 'Offline', value:(pathName.length - pathName.filter(filterOnline).length) ||0},
+             
+              ],
+              colors:[
+                theme.palette.success.main,
+                theme.palette.error.main,
+              ]
+            }}
+          />
+        </Grid>
+         {/* Inverter Status */}
+         <Grid xs={12} md={6} lg={6}>
+          <AppCurrentVisits
+            title="Inverter Status"
+            chart={{
+              series: [
+                { label: 'Online', value:inverterData.filter(filterOnline).length||0 },
+                { label: 'Offline', value:(inverterData.length - inverterData.filter(filterOnline).length) ||0},
              
               ],
               colors:[
@@ -199,7 +249,7 @@ export default function AppView() {
         </Grid>
        
         {/* Stcok Status */}
-        <Grid xs={12} md={6} lg={6}>
+        {/* <Grid xs={12} md={6} lg={6}>
           <AppCurrentVisits
             title="Stock Status"
             chart={{
@@ -220,7 +270,7 @@ export default function AppView() {
              
             }}
           />
-        </Grid>
+        </Grid> */}
      </Grid>
         {/* <Grid xs={12} md={6} lg={8}>
           <AppConversionRates
