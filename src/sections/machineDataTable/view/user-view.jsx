@@ -49,6 +49,7 @@ export default function UserPage() {
 
   // getting data from Redux/store
   store.subscribe(() => {
+    console.log(store.getState().data.data);
     setData(store.getState().data.data);
    
   });
@@ -172,7 +173,8 @@ export default function UserPage() {
                 headLabel={[
                   { id: 'sr', label: 'Sr.No' },
                   { id: 'machine', label: `${machineType==="RECD" ? "Machine Details":"Junction" }` },
-                  { id: 'status', label: 'Status' },
+                  { id: 'Junction-Status', label: 'Junction-Status' },
+                  { id: 'Junction-Status', label: 'Inverter-Status' },
                   ...(machineType !== "Incinerator"
                   ? [{ id: 'stockStatus',  label: `${machineType==="RECD" ? "Temperature":"Lamps" }`}]
                   : []),

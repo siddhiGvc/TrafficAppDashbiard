@@ -138,8 +138,9 @@ export default function UserTableRow({
 
   }
 
-  const online = a => moment().diff(moment.utc((a.lastHeartbeatTime || a.lastOnTime).replace('Z', '')), 'minute') < 5;
-
+  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime || a.lastOnTime).replace('Z', '')), 'minute') < 5;
+  const onlineJunction = a => a.light_status==="Online";
+  const onlineInverter = a => a.inverter_status==="Online";
 
   // address of machine table 
   const address = a => (
@@ -194,33 +195,41 @@ function burnStatus(i, visible) {
     
 }
 
-// const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
+// const filterOnline = q => moment().diff(moment.utc((q.lastHeartBeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
   
 
 // converting integer to text amount function
-const amountText = amt => {
-  amt = amt || 0;
+// const amountText = amt => {
+//   amt = amt || 0;
 
-  if(amt>=10000000) {
-      const cr = parseInt(amt / 100000, 10) / 100;
-      const Cr = parseFloat(cr.toFixed(2));
-      return `${Cr} Cr`;
-  } 
-  if(amt>=1000000) {
-      const l = parseInt(amt / 1000 ,10) / 100;
-      const L = parseFloat(l.toFixed(6));
-      return  `${L} L`;
-  } 
-  if(amt>=1000) {
-      const k = parseInt(amt / 10 ,10) / 100;
-      const K = parseFloat(k.toFixed(2));
-      return  `${K} K`;
-  }
+//   if(amt>=10000000) {
+//       const cr = parseInt(amt / 100000, 10) / 100;
+//       const Cr = parseFloat(cr.toFixed(2));
+//       return `${Cr} Cr`;
+//   } 
+//   if(amt>=1000000) {
+//       const l = parseInt(amt / 1000 ,10) / 100;
+//       const L = parseFloat(l.toFixed(6));
+//       return  `${L} L`;
+//   } 
+//   if(amt>=1000) {
+//       const k = parseInt(amt / 10 ,10) / 100;
+//       const K = parseFloat(k.toFixed(2));
+//       return  `${K} K`;
+//   }
 
-  // Remove the unnecessary else statement
-  return amt;
-}
+//   // Remove the unnecessary else statement
+//   return amt;
+// }
 
+
+const getLabel = () => {
+  if (m.R1 === 'G') return 'R1';
+  if (m.R2 === 'G') return 'R2';
+  if (m.R3 === 'G') return 'R3';
+  if (m.R4 === 'G') return 'R4';
+  return null;
+};
 
 
 
@@ -252,8 +261,23 @@ const amountText = amt => {
         </TableCell>
 
         <TableCell>
-           <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label>
+           <Label color={(!onlineJunction(m)  && 'error') || 'success'}>{onlineJunction(m) ? 'Online' : 'Offline'}</Label>
         </TableCell>
+        <TableCell>
+           <Label color={(!onlineInverter(m)  && 'error') || 'success'}>{onlineInverter(m) ? 'Online' : 'Offline'}</Label>
+        </TableCell>
+        <TableCell>
+           <Typography>
+             <span><span>{m.R1}{m.R2}{m.R3}{m.R4}</span></span>
+           </Typography>
+        </TableCell>
+        <TableCell>
+           <Typography>
+           <span>{getLabel}</span>
+
+           </Typography>
+        </TableCell>
+      
 
         {MachineType!=="RECD" && MachineType!=="Incinerator"&& <TableCell>{stockStatus(m.spiral_a_status, online(m))}</TableCell>}
         {MachineType === "RECD" && (
@@ -312,7 +336,8 @@ const amountText = amt => {
               </TableCell>
           )}
      
-        <TableCell>
+     
+     <TableCell>
       <button
         type="button"
         className="btn btn-sm btn-outline-success btn-tt heading6"
@@ -322,7 +347,6 @@ const amountText = amt => {
         View
       </button>
     </TableCell>
-  
       
 
        
@@ -352,17 +376,20 @@ const amountText = amt => {
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.uid} {m.serial}</b>
          <table className="table" style={{fontSize:'14px'}}>
                             <tbody> 
-                                  <tr><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
-                                <tr><th style={{color: '#444'}}>IMSI</th><td style={{color: '#444'}}>{m.sim_number}</td></tr>
-                                <tr><th style={{color: '#444'}}>RSSI</th><td style={{color: '#444'}}>{m.rssi}</td></tr>
-                                {MachineType!=="Incinerator" ?<tr><th style={{color: '#444'}}>Collection</th><td style={{color: '#444'}}>&#8377;&nbsp;{m.cashCurrent} <span className="text-muted">[ &#8377;&nbsp;{amountText(m.cashLife + m.cashCurrent)} ]</span></td></tr>:""}
+                                  <tr><th style={{color: '#444'}}>Junction Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                                  <tr><th style={{color: '#444'}}>Inverter Status</th><td style={{color: '#444'}} >  <Label color={(!onlineInverter(m)  && 'error') || 'success'}>{onlineInverter(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                                <tr><th style={{color: '#444'}}>DCV</th><td style={{color: '#444'}}>{m.DVC}</td></tr>
+                                <tr><th style={{color: '#444'}}>DCI</th><td style={{color: '#444'}}>{m.DCI}</td></tr>
+                                <tr><th style={{color: '#444'}}>ACV</th><td style={{color: '#444'}}>{m.AVC}</td></tr>
+                                <tr><th style={{color: '#444'}}>ACI</th><td style={{color: '#444'}}>{m.ACI}</td></tr>
+                                {/* {MachineType!=="Incinerator" ?<tr><th style={{color: '#444'}}>Collection</th><td style={{color: '#444'}}>&#8377;&nbsp;{m.cashCurrent} <span className="text-muted">[ &#8377;&nbsp;{amountText(m.cashLife + m.cashCurrent)} ]</span></td></tr>:""}
                                 {MachineType!=="Incinerator" ?<tr><th style={{color: '#444'}}>Items Dispensed</th><td style={{color: '#444'}}>{m.qtyCurrent} <span className="text-muted">[ {amountText(m.qtyLife + m.qtyCurrent)} ]</span></td></tr>:""}
                                 
                                 {MachineType!=="Vending" ?<tr id="itemsBurntRow" ><th style={{color: '#444'}}>Items Burnt</th><td style={{color: '#444'}} >{m.doorCurrent} <span className="text-muted ">[ {amountText(m.doorLife + m.doorCurrent)} ]</span></td></tr>:""}
-                                 {MachineType!=="Vending" ?<tr id="burningCyclesRow"><th style={{color: '#444'}}>Burning Cycles</th><td style={{color: '#444'}}>{m.burnCycleCurrent} <span className="text-muted ">[ {amountText(m.burnCycleLife + m.burnCycleCurrent)} ]</span></td></tr>:""}
+                                 {MachineType!=="Vending" ?<tr id="burningCyclesRow"><th style={{color: '#444'}}>Burning Cycles</th><td style={{color: '#444'}}>{m.burnCycleCurrent} <span className="text-muted ">[ {amountText(m.burnCycleLife + m.burnCycleCurrent)} ]</span></td></tr>:""} */}
                         
-                                <tr><th style={{color: '#444'}}>On Since</th><td style={{color: '#444'}}>{moment.utc((m.lastOnTime || m.lastHeartbeatTime).replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a')}</td></tr>
-                               <tr ><th style={{color: '#444'}}>Last Online At</th><td style={{color: '#444'}}>{m.lastHeartbeatTime ? moment.utc(m.lastHeartbeatTime.replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
+                                <tr><th style={{color: '#444'}}>On Since</th><td style={{color: '#444'}}>{moment.utc((m.lastOnTime || m.lastHeartBeatTime).replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a')}</td></tr>
+                               <tr ><th style={{color: '#444'}}>Last Online At</th><td style={{color: '#444'}}>{m.lastHeartBeatTime ? moment.utc(m.lastHeartBeatTime.replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
                             </tbody>
                         </table>
       </Popover>

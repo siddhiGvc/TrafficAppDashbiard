@@ -338,10 +338,9 @@ export default function MachinePage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'id', label: 'Sr.No' },
-                  { id: 'UID', label: 'UID'},
-                  { id: 'Location', label: 'Location' },
+                  { id: 'Junction', label: 'Junction'},
                   { id: 'City', label: 'City' },
-                  { id: 'ward', label: `${cInfo[1]}` },
+                  { id: 'zone', label: `${cInfo[1]}` },
                   { id: 'ward', label: `${cInfo[2]}` },
                   { id: 'beat', label: `${cInfo[3]}` },
                   // { id: 'ward', label: 'Verified', align: 'center' },

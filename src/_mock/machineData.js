@@ -25,7 +25,7 @@ export const fetchInverter=async()=> {
     const headers = new Headers({
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`${API}/trafficLights/getInverterStatus`, { method: 'GET', headers });
+    const response = await fetch(`${API}/trafficLights/getAllInverters`, { method: 'GET', headers });
     const json = await response.json();
     // console.log(json);
     return json;

@@ -1,5 +1,5 @@
 // import $ from 'jquery';
-import moment from "moment";
+// import moment from "moment";
 import {  useState,useEffect } from 'react';
 
 // import Stack from '@mui/material/Stack';
@@ -55,13 +55,14 @@ export default function MachineMapView() {
   });
 
   useEffect(()=>{
-    const interval=setInterval(()=>{
-      getAllData();
-     },5000)
+    getAllData();
+    // const interval=setInterval(()=>{
+    //   getAllData();
+    //  },5000)
  
-     return ()=>{
-       clearInterval(interval)
-     }
+    //  return ()=>{
+    //    clearInterval(interval)
+    //  }
 
   },[])
 
@@ -125,10 +126,11 @@ export default function MachineMapView() {
 
 
   // filtering online machines
-  const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
+  const filterOnline = q => q.light_status==="Online";
+  const filterOnlineInverter = q => q.inverter_status==="Online";
   
   //  caheckin machine is online or not
-  // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
+  // const online = m => moment().diff(moment.utc((m.lastHeartBeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 
   // calculated amount as lacks , coror, thound
@@ -175,10 +177,10 @@ export default function MachineMapView() {
       <Grid   xs={12} md={12} lg={9.3} >
         <Stack  container spacing='1' display='flex' flexWrap='wrap' direction='row' justifyContent='space-evenly' >
           {/* total machines ui */}
-        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :6}>
+        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
          
           <MachineCard
-            title="Total Machines"
+            title="Total Junctions"
             total={data.dataAll.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
@@ -186,10 +188,29 @@ export default function MachineMapView() {
            
         </Grid>
           {/* online machines ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :6}>
+        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
           <MachineCard
-            title="Online Machines"
+            title="Online Junctions"
             total={data.data.filter(filterOnline).length}
+            color="info"
+            icon={<img alt="icon" src="/assets/icons/online.png" />}
+          />
+        </Grid>
+        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+         
+          <MachineCard
+            title="Total Inverters"
+            total={data.dataAll.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+          />
+           
+        </Grid>
+          {/* online machines ui */}
+        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+          <MachineCard
+            title="Online Inverters"
+            total={data.data.filter(filterOnlineInverter).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}
           />

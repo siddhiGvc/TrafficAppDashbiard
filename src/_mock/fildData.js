@@ -18,10 +18,11 @@ export const getAllData = async () => {
       const ward=JSON.parse(sessionStorage.getItem("wards"));
       // const beat=JSON.parse(sessionStorage.getItem("beats"))
       const machineStatus=JSON.parse(sessionStorage.getItem("machineStatus"));
+      const inverterStatus=JSON.parse(sessionStorage.getItem("inverterStatus"));
       // const stockStatus=JSON.parse(sessionStorage.getItem('stockStatus'));
       // const burn_status=JSON.parse(sessionStorage.getItem('burnStatus'))
   
-      const response = await fetch(`${API}/add/getData?city=${city.join()}&location=${zone.join()}&uid=${ward.join()}&status=${machineStatus.join()}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/add/getData?city=${city.join()}&location=${zone.join()}&uid=${ward.join()}&status=${machineStatus.join()}&inverter_status=${inverterStatus.join()}`, { method: 'GET', headers });
       const json = await response.json();
       // console.log(json.data);
 
@@ -83,7 +84,7 @@ export const zoneData=async(city)=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine/master/beat?city=${city}&zone=${zone}&ward=${ward}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/add/getBeats?city=${city}&location=${zone}&uid=${ward}`, { method: 'GET', headers });
       const json = await response.json();
       return json.data;
     } catch (error) {

@@ -8,14 +8,14 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 
-import {zoneData,wardData,getAllData } from 'src/_mock/fildData';
+import {zoneData,wardData,beatData,getAllData } from 'src/_mock/fildData';
 // import { GetClentInfoDetails,GetClentNameDetails} from 'src/_mock/customers';
 
 function FieldSelection({ sx, ...other }) {
   const [cities] = useState(['Mumbai']);
   const [zones,setZones]=useState([]);
   const [wards,setWards]=useState([]);
-  const [beats]=useState([]);
+  const [beats,setBeats]=useState([]);
   const [cInfo]=useState(["City","Zone","Ward","Beat"]);
   const [cityName, setCitiesName] = useState(['Mumbai']);
   const [zoneName,setZonesName]=useState([]);
@@ -104,11 +104,11 @@ function FieldSelection({ sx, ...other }) {
     setWards(res);
   
   });
-  // beatData(cityName,zoneName,wardName).then((res)=>{
-  //   // console.log(res);
-  //   setBeats(res);
+  beatData(cityName,zoneName,wardName).then((res)=>{
+    // console.log(res);
+    setBeats(res);
   
-  // });
+  });
 
  
   
@@ -151,18 +151,18 @@ useEffect(()=>{
 
 },[cityName,zoneName])
  
-// useEffect(()=>{
+useEffect(()=>{
  
-//     beatData(cityName,zoneName,wardName).then((res)=>{
-//       // console.log(res);
-//       sessionStorage.setItem("beats",JSON.stringify(res));
-//       setBeatsName(res);
+    beatData(cityName,zoneName,wardName).then((res)=>{
+      // console.log(res);
+      sessionStorage.setItem("beats",JSON.stringify(res));
+      setBeatsName(res);
       
-//     });
+    });
 
   
 
-// },[cityName,zoneName,wardName])
+},[cityName,zoneName,wardName])
  
  
 

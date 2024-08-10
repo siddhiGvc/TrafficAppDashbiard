@@ -119,7 +119,7 @@ export default function AppView() {
   // filtering onlines machines
   const filterOnline = q => moment().diff(moment.utc((q.lastHeartBeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
   
-  // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
+  // const online = m => moment().diff(moment.utc((m.lastHeartBeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 
   // converting value in the form of lacks, thousand ,Coror
@@ -216,7 +216,7 @@ export default function AppView() {
         {/* Machine Status */}
         <Grid xs={12} md={6} lg={6}>
           <AppCurrentVisits
-            title="Machine Status"
+            title="Junction Status"
             chart={{
               series: [
                 { label: 'Online', value:pathName.filter(filterOnline).length||0 },

@@ -14,29 +14,29 @@ let map;
 export default function Map({center,locations,MachineType}){
  
 
-   const amountText = amt => {
-    amt = amt || 0;
+//    const amountText = amt => {
+//     amt = amt || 0;
  
-    if(amt>=10000000) {
-        const cr = parseInt(amt / 100000, 10) / 100;
-        const Cr = parseFloat(cr.toFixed(2));
-        return `${Cr} Cr`;
-    } 
-    if(amt>=1000000) {
-        const l = parseInt(amt / 1000 ,10) / 100;
-        const Lak = parseFloat(l.toFixed(6));
-        return  `${Lak} L`;
-    } 
-    if(amt>=1000) {
-        const k = parseInt(amt / 10 ,10) / 100;
-        const K = parseFloat(k.toFixed(2));
-        return  `${K} K`;
-    }
+//     if(amt>=10000000) {
+//         const cr = parseInt(amt / 100000, 10) / 100;
+//         const Cr = parseFloat(cr.toFixed(2));
+//         return `${Cr} Cr`;
+//     } 
+//     if(amt>=1000000) {
+//         const l = parseInt(amt / 1000 ,10) / 100;
+//         const Lak = parseFloat(l.toFixed(6));
+//         return  `${Lak} L`;
+//     } 
+//     if(amt>=1000) {
+//         const k = parseInt(amt / 10 ,10) / 100;
+//         const K = parseFloat(k.toFixed(2));
+//         return  `${K} K`;
+//     }
 
-    // Remove the unnecessary else statement
-    return amt;
+//     // Remove the unnecessary else statement
+//     return amt;
 
-}
+// }
 
 
 
@@ -105,73 +105,73 @@ export default function Map({center,locations,MachineType}){
    map.fitBounds(bounds);
  
    locations.forEach(location => {
-     let Status;
-     const st=moment().diff(moment.utc((location.data.lastHeartbeatTime || location.data.lastOnTime).replace('Z', '')), 'minute') < 5;
- 
-     if(st)
+    //  let Status;
+     let StatusLight;
+     let StatusInverter;
+     const st=moment().diff(moment.utc((location.data.lastHeartBeatTime || location.data.lastOnTime).replace('Z', '')), 'minute') < 5;
+     const stLight=location.data.light_status==="Online";
+     const stInverter=location.data.inverter_status==="Online";;
+     if(stLight && stInverter)
      {
-         Status="Online"
+        
+         StatusLight="Online";
+         StatusInverter="Online";
+     }
+     else if(stInverter)
+     {
+      StatusInverter="Online";
+     }
+     else if(stLight)
+     {
+      StatusLight="Online";
      }
      else{
-         Status="Offline"
+       
+         StatusLight="Offline";
+         StatusInverter="Offline";
      }
         
      const marker = L.marker(location.coordinates).addTo(map);
   
      marker.bindPopup(`
-     <b style="font-size: 1.25em;">${location.data.uid} ${location.data.machineId}</b>
+     <b style="font-size: 1.25em;">Junction :${location.data.Junction}</b>
      <table class="table">
        <tbody> 
          <tr>
-           <th style="color: #444">Status</th>
-           <td style="color: #444" class="text-${st ? 'success' : 'danger'}">${Status}</td>
+           <th style="color: #444">Junction Status</th>
+           <td style="color: #444" class="text-${stLight ? 'success' : 'danger'}">${StatusLight}</td>
+         </tr>
+          <tr>
+           <th style="color: #444">Inverter Status</th>
+           <td style="color: #444" class="text-${stInverter ? 'success' : 'danger'}">${StatusInverter}</td>
          </tr>
          <tr>
-           <th style="color: #444">IMSI</th>
-           <td style="color: #444">${location.data.sim_number}</td>
+           <th style="color: #444">DCV</th>
+           <td style="color: #444">${location.data.DCV}</td>
          </tr>
          <tr>
-           <th style="color: #444">RSSI</th>
-           <td style="color: #444">${location.data.rssi}</td>
+           <th style="color: #444">DCI</th>
+           <td style="color: #444">${location.data.DCI}</td>
          </tr>
-         ${MachineType !== "Incinerator" ? `
            <tr>
-             <th style="color: #444">Collection</th>
-             <td style="color: #444">
-               &#8377;&nbsp;${location.data.cashCurrent} <span class="text-muted">[ &#8377;&nbsp;${amountText(location.data.cashLife + location.data.cashCurrent)} ]</span>
-             </td>
-           </tr>
+           <th style="color: #444">ACV</th>
+           <td style="color: #444">${location.data.ACV}</td>
+         </tr>
            <tr>
-             <th style="color: #444">Items Dispensed</th>
-             <td style="color: #444">
-               ${location.data.qtyCurrent} <span class="text-muted">[ ${amountText(location.data.qtyLife + location.data.qtyCurrent)} ]</span>
-             </td>
-           </tr>
-         ` : ''}
-         ${MachineType !== "Vending" ? `
-           <tr id="itemsBurntRow">
-             <th style="color: #444">Items Burnt</th>
-             <td style="color: #444">
-               ${location.data.doorCurrent} <span class="text-muted">[ ${amountText(location.data.doorLife + location.data.doorCurrent)} ]</span>
-             </td>
-           </tr>
-           <tr id="burningCyclesRow">
-             <th style="color: #444">Burning Cycles</th>
-             <td style="color: #444">
-               ${location.data.burnCycleCurrent} <span class="text-muted">[ ${amountText(location.data.burnCycleLife + location.data.burnCycleCurrent)} ]</span>
-             </td>
-           </tr>
-         ` : ''}
+           <th style="color: #444">ACI</th>
+           <td style="color: #444">${location.data.ACI}</td>
+         </tr>
+       
          <tr>
            <th style="color: #444">On Since</th>
            <td style="color: #444">
-             ${moment.utc((location.data.lastOnTime || location.data.lastHeartbeatTime).replace('Z', '')).local().format('DD-MMM-YYYY<br/>hh:mm a')}
+             ${moment.utc((location.data.lastOnTime || location.data.lastHeartBeatTime).replace('Z', '')).local().format('DD-MMM-YYYY<br/>hh:mm a')}
            </td>
          </tr>
          <tr class="${st ? 'd-none' : ''}">
            <th style="color: #444">Last Online At</th>
            <td style="color: #444">
-             ${location.data.lastHeartbeatTime ? moment.utc(location.data.lastHeartbeatTime.replace('Z', '')).local().format('DD-MMM-YYYY<br/>hh:mm a') : 'NA'}
+             ${location.data.lastHeartBeatTime ? moment.utc(location.data.lastHeartBeatTime.replace('Z', '')).local().format('DD-MMM-YYYY<br/>hh:mm a') : 'NA'}
            </td>
          </tr>
        </tbody>
@@ -182,7 +182,7 @@ export default function Map({center,locations,MachineType}){
  
   
       
-  }, [center, locations,MachineType]);
+  }, [center, locations]);
 
   useEffect(() => {
     loadMap();

@@ -13,6 +13,7 @@ import SelfMap from 'src/sections/Reports/LoginMaps/selfMap';
 import ViewMap from 'src/sections/Reports/LoginMaps/viewMap';
 import DailyReports from 'src/sections/Reports/dailyReports';
 import HourlyReport from 'src/sections/Reports/HourlyReport';
+import { TraficLightsView } from 'src/sections/TrafficLights';
 import ColorSetting from 'src/sections/Settings/colorSetting';
 import MachinePage from 'src/sections/Machines/view/user-view';
 import CustomerPage from 'src/sections/Customers/customerPage';
@@ -20,6 +21,7 @@ import InventoryPage from 'src/sections/Inventory/inventoryPage';
 import MachineSetting from 'src/sections/Settings/machineSetting';
 import PaytmTransactions from 'src/sections/Reports/paytmTransactions';
 import MachineMapView from 'src/sections/MachineMap/view/products-view';
+
 
 
 
@@ -58,6 +60,7 @@ export default function Router() {
         { path: 'machines', element: <MachinePage/> },
         { path: 'machineData', element: <ProductsView /> },
         { path: 'machineMap', element: <MachineMapView/> },
+        { path: 'TrafficLights', element: <TraficLightsView/> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'dailyReports', element: <DailyReports/>},
         { path: 'loginLogs', element: <LoginLogs/>},
