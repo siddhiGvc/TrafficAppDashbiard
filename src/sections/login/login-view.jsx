@@ -68,8 +68,8 @@ export default function LoginView() {
       }
 
       useEffect(()=>{
-      
-        if(GEOLOCATION===true)
+        // console.log(GEOLOCATION);
+        if(GEOLOCATION)
         {
           console.log(GEOLOCATION)
            getLatLon();
@@ -157,7 +157,7 @@ export default function LoginView() {
             showAlertMessage();
             setType("success");
             setMessage("Login Successsfull With Admin")
-             if(GEOLOCATION===true)
+             if(GEOLOCATION)
              {
               sendLattLon();
              }

@@ -89,7 +89,7 @@ function StatusSelection({MachineType, sx, ...other }) {
       <Stack spacing={0.1}>
         {/* Machine Status Dropdown */}
         <div className="mt-2 pb-2 border-bottom-1">
-          <h5 className="text-primary d-inline">Machine Status</h5>
+          <h5 className="text-primary d-inline">Junction Status</h5>
           <div className="row">
             <div className="col-12 d-flex">
               <Select
@@ -117,7 +117,7 @@ function StatusSelection({MachineType, sx, ...other }) {
             <div className="col-12 d-flex">
               <Select
                 multiple
-                value={machineStatus}
+                value={inverterStatus}
                 onChange={handleInverterStatusChange}
                 style={{ borderBlockStyle: 'inherit',height:'40px',width:'100%' }}
                 renderValue={(selected ) =>selected.join(',')}

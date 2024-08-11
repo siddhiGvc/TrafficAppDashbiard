@@ -48,7 +48,7 @@ export default function UserTableRow({
   selected,
   name,
   email,
-  city,
+  City,
   zone,
   role,
   beat,
@@ -193,7 +193,7 @@ export default function UserTableRow({
         <TableCell>
           <Label color={(!role && 'warning') || 'success'}>{role ? 'Admin' : 'User'}</Label>
         </TableCell>
-        <TableCell>{city}</TableCell>
+        <TableCell>{City}</TableCell>
         <TableCell>{zone}</TableCell>
         <TableCell>{ward}</TableCell>
         <TableCell>{beat}</TableCell>
@@ -306,7 +306,7 @@ export default function UserTableRow({
 UserTableRow.propTypes = {
   row:PropTypes.any,
   sr:PropTypes.any,
-  city: PropTypes.any,
+  City: PropTypes.any,
   zone: PropTypes.any,
   email: PropTypes.any,
   handleClick: PropTypes.func,

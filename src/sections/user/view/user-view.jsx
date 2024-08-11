@@ -537,7 +537,7 @@ export default function UserPage() {
                       name={row.name}
                       role={row.isAdmin}
                       email={row.email}
-                      city={row.city}
+                      City={row.City}
                       zone={row.zone}
                       ward={row.ward}
                       beat={row.beat}

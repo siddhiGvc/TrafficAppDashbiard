@@ -255,7 +255,7 @@ const getLabel = () => {
           <Stack direction="row" alignItems="center" spacing={2}>
            
             <Typography variant="subtitle2" noWrap onKeyDown={handleKeyDown} onClick={handleModalOpen} role="button"  tabIndex={0}>
-           <span> <span ><b>{m.uid}</b> [S/N: {m.UID}]</span><br/><small className="text-muted">city: {m.City} / zone: {m.Location} / ward: {m.UID} </small><br/>{address(m)}</span>
+           <span> <span ><b>{m.Junction}</b> [S/N: {m.Junction}]</span><br/><small className="text-muted">city: {m.City} / zone: {m.zone} / ward: {m.ward} / beat: {m.beat} </small><br/>{address(m)}</span>
             </Typography>
           </Stack>
         </TableCell>
@@ -277,7 +277,16 @@ const getLabel = () => {
 
            </Typography>
         </TableCell>
-      
+        <TableCell>
+      <button
+        type="button"
+        className="btn btn-sm btn-outline-success btn-tt heading6"
+        onClick={handleOpenMenu}
+        
+      >
+        View
+      </button>
+    </TableCell>
 
         {MachineType!=="RECD" && MachineType!=="Incinerator"&& <TableCell>{stockStatus(m.spiral_a_status, online(m))}</TableCell>}
         {MachineType === "RECD" && (
@@ -337,16 +346,7 @@ const getLabel = () => {
           )}
      
      
-     <TableCell>
-      <button
-        type="button"
-        className="btn btn-sm btn-outline-success btn-tt heading6"
-        onClick={handleOpenMenu}
-        
-      >
-        View
-      </button>
-    </TableCell>
+   
       
 
        
@@ -376,7 +376,7 @@ const getLabel = () => {
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.uid} {m.serial}</b>
          <table className="table" style={{fontSize:'14px'}}>
                             <tbody> 
-                                  <tr><th style={{color: '#444'}}>Junction Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                                  <tr><th style={{color: '#444'}}>Junction Status</th><td style={{color: '#444'}} >  <Label color={(!onlineJunction(m)  && 'error') || 'success'}>{onlineJunction(m) ? 'Online' : 'Offline'}</Label></td></tr>
                                   <tr><th style={{color: '#444'}}>Inverter Status</th><td style={{color: '#444'}} >  <Label color={(!onlineInverter(m)  && 'error') || 'success'}>{onlineInverter(m) ? 'Online' : 'Offline'}</Label></td></tr>
                                 <tr><th style={{color: '#444'}}>DCV</th><td style={{color: '#444'}}>{m.DVC}</td></tr>
                                 <tr><th style={{color: '#444'}}>DCI</th><td style={{color: '#444'}}>{m.DCI}</td></tr>

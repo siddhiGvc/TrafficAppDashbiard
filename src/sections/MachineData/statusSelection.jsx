@@ -33,6 +33,7 @@ function StatusSelection({MachineType, sx, ...other }) {
       $('.incinerator').remove();
     }
     sessionStorage.setItem('machineStatus',JSON.stringify(machineStatus));
+    sessionStorage.setItem('inverterStatus',JSON.stringify(inverterStatus));
     sessionStorage.setItem('stockStatus',JSON.stringify(stockStatus));
     sessionStorage.setItem('burnStatus',JSON.stringify(burnStatus));
     sessionStorage.setItem('doorStatus',JSON.stringify(doorStatus));
@@ -118,7 +119,7 @@ function StatusSelection({MachineType, sx, ...other }) {
             <div className="col-12 d-flex">
               <Select
                 multiple
-                value={machineStatus}
+                value={inverterStatus}
                 onChange={handleInverterStatusChange}
                 style={{ borderBlockStyle: 'inherit',height:'40px',width:'100%' }}
                 renderValue={(selected ) =>selected.join(',')}

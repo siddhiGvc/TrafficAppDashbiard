@@ -26,11 +26,8 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     let interval1;
     let interval2;
-    if(!sessionStorage.getItem("token"))
-    {
-      router.push("/");
-    }
-    else  if (GEOLOCATION===true){
+  
+    if (GEOLOCATION){
      
    
         getLatLon();
@@ -57,9 +54,14 @@ export default function DashboardLayout({ children }) {
       clearInterval(interval2);
       clearInterval(interval1);
     };
-  }, [router]); // Include GEOLOCATION in the dependency array
+  }, []); // Include GEOLOCATION in the dependency array
   
-
+ useEffect(()=>{
+  if(!sessionStorage.getItem("token"))
+    {
+      router.push("/");
+    }
+ },[router])
 
   
 
