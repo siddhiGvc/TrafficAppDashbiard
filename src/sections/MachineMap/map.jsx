@@ -120,10 +120,12 @@ export default function Map({center,locations,MachineType}){
      else if(stInverter)
      {
       StatusInverter="Online";
+      StatusLight="Offline";
      }
      else if(stLight)
      {
       StatusLight="Online";
+      StatusInverter="Offline";
      }
      else{
        

@@ -2,9 +2,15 @@ import moment from "moment";
 import SwitchButton from 'bootstrap-switch-button-react';
 import React, { useState, useEffect,useCallback } from 'react';
 
-import '../../app.css';
+import Card from '@mui/material/Card';
+import { Container} from '@mui/system';
 
-// import MultipleSelectChip from './components/selection';
+import Label from 'src/components/label';
+
+import '../../app.css';
+import Selection from './selection';
+
+
 
 
 
@@ -20,8 +26,8 @@ export default function TraficLightsView (){
   const [isChecked, setIsChecked] = useState(true);
   const [inverterStatus,setInverterStatus]=useState('');
   const [lightStatus,setLightStatus]=useState('');
-  const [selectedJunction]=useState(20000);
-  const [setJunctions]=useState([]);
+  const [selectedJunction,setSelectedJunction]=useState(20000);
+  const [junctions,setJunctions]=useState([]);
 
 //   const navigate = useNavigate();
 
@@ -30,8 +36,8 @@ export default function TraficLightsView (){
   };
 
 
-
-  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+  const onlineJunction = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+  const onlineInverter = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
   
   const getLightData=useCallback(async()=>{
     fetch('http://gvc.co.in:8080/trafficLights/getLights', {
@@ -52,7 +58,7 @@ export default function TraficLightsView (){
       setActiveLight2(Data.R2);
       setActiveLight3(Data.R3);
       setActiveLight4(Data.R4);
-      if(online(Data))
+      if(onlineJunction(Data))
       {
         setLightStatus("Online");
       }
@@ -102,7 +108,7 @@ export default function TraficLightsView (){
       setACI(Data.ACI);
       setDCV(Data.DCV);
       setDCI(Data.DCI);
-      if(online(Data))
+      if(onlineInverter(Data))
         {
           setInverterStatus("Online");
         }
@@ -227,6 +233,8 @@ export default function TraficLightsView (){
 
 
   return (
+    <Card>
+            <Container maxWidth='xxl'>
     
     <div>
    
@@ -247,16 +255,17 @@ export default function TraficLightsView (){
                     
                   
                   </div>
-                  {/* <div>
-                  <MultipleSelectChip 
+                  <div>
+                  <Selection
                       names={junctions} 
                       selectedJunction={selectedJunction} 
                       setSelectedJunction={setSelectedJunction} 
                     />
 
-                  </div> */}
+                  </div>
                   <div style={{paddingRight:"200px"}}>
-                  <h4 className='inverter-stat'>Status : <span className='inverter-value'>{lightStatus}</span></h4> 
+                  Status: <Label sx={{width:100, height:40}} color={(lightStatus==="Offline"  && 'error') || 'success'}>{lightStatus}</Label>
+                  {/* <h4 className='inverter-stat'>Status : <span className='inverter-value'>{lightStatus}</span></h4>  */}
                   </div>
        </div>
 
@@ -318,14 +327,15 @@ export default function TraficLightsView (){
     </div>
    
     <div className='inverter-container'>
-      <h3 className='inverter-heading'>Inverter Status: <span className='inverter-value'>{inverterStatus}</span></h3>
+      <h3 className='inverter-heading'>Inverter Status:  <Label sx={{width:100, height:40}} color={(inverterStatus==="Offline"  && 'error') || 'success'}>{inverterStatus}</Label></h3>
       <h4 className='inverter-stat'>ACV : <span className='inverter-value'>{ACV}</span></h4>
       <h4 className='inverter-stat'>ACI : <span className='inverter-value'>{ACI}</span></h4>
       <h4 className='inverter-stat'>DCV : <span className='inverter-value'>{DCV}</span></h4>
       <h4 className='inverter-stat'>DCI : <span className='inverter-value'>{DCI}</span></h4>
     </div>
     </div>
-    
+    </Container>
+    </Card>
   );
 };
 
