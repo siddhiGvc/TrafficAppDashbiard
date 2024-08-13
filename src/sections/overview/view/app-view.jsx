@@ -1,6 +1,6 @@
-import moment from "moment";
+// import moment from "moment";
 // import { faker } from '@faker-js/faker';
-import { useState,useEffect } from 'react';
+import { useState,useEffect, useCallback } from 'react';
 
 // import { useLocation } from 'react-router-dom';
 // import { useState} from 'react';
@@ -17,14 +17,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 // import AppTasks from '../app-tasks';
 // import AppNewsUpdate from '../app-news-update';
-// import { GetClentNameDetails } from "src/_mock/customers";
-
+import { GetClentNameDetails } from "src/_mock/customers";
 
 // import AppOrderTimeline from '../app-order-timeline';
 import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
-import {fetchData,fetchInverter} from "../../../_mock/machineData";
+import {fetchData} from "../../../_mock/machineData";
 
 // import AppTrafficBySite from '../app-traffic-by-site';
 // import AppCurrentSubject from '../app-current-subject';
@@ -39,75 +38,75 @@ import {fetchData,fetchInverter} from "../../../_mock/machineData";
 export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName,setPathName]=useState([]);
-  const [inverterData,setInverterData]=useState([]);
-  // const [setMachineType]=useState('');
+  // const [inverterData]=useState([]);
+  const [setMachineType]=useState('');
  
 
   // calling for api data
-  // const LoadData=()=>{
-  //   const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
-  //      console.log(UserInfo);
+  const LoadData=useCallback(async()=>{
+    const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+       console.log(UserInfo);
 
-  //      if(UserInfo.clientName)
-  //      {
-  //       const obj={
-  //         clientName:UserInfo.clientName
-  //       }
-  //       GetClentNameDetails(obj).then((r)=>{
-  //         const [{ MachineType }] = r.data;
-  //         setMachineType(MachineType);
-  //       })
-  //      }
+       if(UserInfo.clientName)
+       {
+        const obj={
+          clientName:UserInfo.clientName
+        }
+        GetClentNameDetails(obj).then((r)=>{
+          const [{ MachineType }] = r.data;
+          setMachineType(MachineType);
+        })
+       }
    
-  //     const Cities=(UserInfo.City).split(',') || [''];
-  //        if(Cities[0]==="null")
-  //        {
-  //         Cities[0]=" "
-  //        }
-  //        console.log(Cities);
-  //   // const city=JSON.parse(sessionStorage.getItem("userCity"));
-  //   fetchData(Cities).then((res)=>{
-  //     console.log(res);
-  //     setPathName(res);
+      const Cities=(UserInfo.City).split(',') || [''];
+         if(Cities[0]==="null")
+         {
+          Cities[0]=" "
+         }
+         console.log(Cities);
+    // const city=JSON.parse(sessionStorage.getItem("userCity"));
+    fetchData(Cities).then((res)=>{
+      console.log(res.data);
+      setPathName(res.data);
     
-  //   });
+    });
   
    
-  // };
+  },[setMachineType]);
 
  
 
   // calling loadData every 5 seconds
   useEffect(() => {
   
-    // LoadData();
+    LoadData();
     
-    // const interval=setInterval(()=>{
-    //    LoadData();
+    const interval=setInterval(()=>{
+       LoadData();
      
-    // },5000)
+    },5000)
     
-    fetchData().then((res)=>{
+    // fetchData().then((res)=>{
     
-      console.log(res);
-      setPathName(res);
+    //   console.log(res);
+    //   setPathName(res);
     
-    });
-    fetchInverter().then((res)=>{
+    // });
+    // fetchInverter().then((res)=>{
     
-      console.log(res);
-      setInverterData(res);
+    //   console.log(res);
+    //   setInverterData(res);
     
-    });
+    // });
 
-    // return(()=>{
-    //   clearInterval(interval);
-    // })
+    return(()=>{
+      clearInterval(interval);
+    })
   
 
  
    
-  },[]);
+  },[LoadData]);
 
   
   
@@ -117,7 +116,10 @@ export default function AppView() {
 
 
   // filtering onlines machines
-  const filterOnline = q => moment().diff(moment.utc((q.lastHeartBeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
+  // const filterOnline = q => moment().diff(moment.utc((q.lastHeartBeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
+
+  const filterOnline = q => q.light_status==="Online";
+  const filterOnlineInverter = q => q.inverter_status==="Online";
   
   // const online = m => moment().diff(moment.utc((m.lastHeartBeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
@@ -180,7 +182,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Total Inverters"
-            total={inverterData.length}
+            total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
           />
@@ -189,7 +191,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Online Inverters"
-            total={inverterData.filter(filterOnline).length}
+            total={pathName.filter(filterOnlineInverter).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}
           />
@@ -236,8 +238,8 @@ export default function AppView() {
             title="Inverter Status"
             chart={{
               series: [
-                { label: 'Online', value:inverterData.filter(filterOnline).length||0 },
-                { label: 'Offline', value:(inverterData.length - inverterData.filter(filterOnline).length) ||0},
+                { label: 'Online', value:pathName.filter(filterOnlineInverter).length||0 },
+                { label: 'Offline', value:(pathName.length - pathName.filter(filterOnlineInverter).length) ||0},
              
               ],
               colors:[

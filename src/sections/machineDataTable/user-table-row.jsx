@@ -138,9 +138,9 @@ export default function UserTableRow({
 
   }
 
-  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime || a.lastOnTime).replace('Z', '')), 'minute') < 5;
-  const onlineJunction = a => a.light_status==="Online";
-  const onlineInverter = a => a.inverter_status==="Online";
+  // const onlineJunction = a => moment().diff(moment.utc((a.lastHeartBeatTime || a.lastOnTime).replace('Z', '')), 'minute') < 5;
+  const onlineJunction = a => a.light_status==="onlineJunction";
+  const onlineInverter = a => a.inverter_status==="onlineJunction";
 
   // address of machine table 
   const address = a => (
@@ -195,7 +195,7 @@ function burnStatus(i, visible) {
     
 }
 
-// const filterOnline = q => moment().diff(moment.utc((q.lastHeartBeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
+// const filteronlineJunction = q => moment().diff(moment.utc((q.lastHeartBeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
   
 
 // converting integer to text amount function
@@ -261,10 +261,10 @@ const getLabel = () => {
         </TableCell>
 
         <TableCell>
-           <Label color={(!onlineJunction(m)  && 'error') || 'success'}>{onlineJunction(m) ? 'Online' : 'Offline'}</Label>
+           <Label color={(!onlineJunction(m)  && 'error') || 'success'}>{onlineJunction(m) ? 'onlineJunction' : 'Offline'}</Label>
         </TableCell>
         <TableCell>
-           <Label color={(!onlineInverter(m)  && 'error') || 'success'}>{onlineInverter(m) ? 'Online' : 'Offline'}</Label>
+           <Label color={(!onlineInverter(m)  && 'error') || 'success'}>{onlineInverter(m) ? 'onlineJunction' : 'Offline'}</Label>
         </TableCell>
         <TableCell>
            <Typography>
@@ -288,28 +288,28 @@ const getLabel = () => {
       </button>
     </TableCell>
 
-        {MachineType!=="RECD" && MachineType!=="Incinerator"&& <TableCell>{stockStatus(m.spiral_a_status, online(m))}</TableCell>}
+        {MachineType!=="RECD" && MachineType!=="Incinerator"&& <TableCell>{stockStatus(m.spiral_a_status, onlineJunction(m))}</TableCell>}
         {MachineType === "RECD" && (
               <TableCell>
                   {(() => {
-                      if ((m.spiral_a_status === 2 || m.spiral_a_status === 3 || m.spiral_a_status === 6 || m.spiral_a_status === 7) && online(m)) {
+                      if ((m.spiral_a_status === 2 || m.spiral_a_status === 3 || m.spiral_a_status === 6 || m.spiral_a_status === 7) && onlineJunction(m)) {
                           return <span className="badge py-1 px-3 badge-pill badge-danger">Error</span>;
                       }
-                      if (online(m)) {
+                      if (onlineJunction(m)) {
                           return <span>A:{m.doorCurrent}/B:{m.qtyCurrent}</span>;
                       }
                       return null;
                   })()}
               </TableCell>
           )}
-           {MachineType!=="RECD" && MachineType!=="Vending" && <TableCell>{burnStatus(m.burn_status, online(m))}</TableCell>}
+           {MachineType!=="RECD" && MachineType!=="Vending" && <TableCell>{burnStatus(m.burn_status, onlineJunction(m))}</TableCell>}
            {MachineType === "RECD" && (
               <TableCell>
                   {(() => {
-                      if ((m.spiral_a_status>3 && m.spiral_a_status<8) && online(m)) {
+                      if ((m.spiral_a_status>3 && m.spiral_a_status<8) && onlineJunction(m)) {
                           return <span className="badge py-1 px-3 badge-pill badge-danger">Error</span>;
                       }
-                      if (online(m)) {
+                      if (onlineJunction(m)) {
                           return <span>{m.burnCycleCurrent}</span>;
                       }
                       return null;
@@ -320,10 +320,10 @@ const getLabel = () => {
            {MachineType === "RECD" && (
               <TableCell>
                   {(() => {
-                      if ((m.spiral_a_status>3 && m.spiral_a_status<8) && online(m)) {
+                      if ((m.spiral_a_status>3 && m.spiral_a_status<8) && onlineJunction(m)) {
                           return <span className="badge py-1 px-3 badge-pill badge-danger">Error</span>;
                       }
-                      if (online(m)) {
+                      if (onlineJunction(m)) {
                           return <span>{m.rssi}</span>;
                       }
                       return null;
@@ -334,10 +334,10 @@ const getLabel = () => {
             {MachineType === "RECD" && (
               <TableCell >
                   {(() => {
-                      if ((m.spiral_a_status===1 || m.spiral_a_status===3 || m.spiral_a_status===5 || m.spiral_a_status===7) && online(m)) {
+                      if ((m.spiral_a_status===1 || m.spiral_a_status===3 || m.spiral_a_status===5 || m.spiral_a_status===7) && onlineJunction(m)) {
                           return <span className="badge py-1 px-3 badge-pill badge-danger">Error</span>;
                       }
-                      if (online(m)) {
+                      if (onlineJunction(m)) {
                           return <span className="badge py-1 px-3 badge-pill badge-success">Ok</span>;
                       }
                       return null;
@@ -376,8 +376,8 @@ const getLabel = () => {
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.uid} {m.serial}</b>
          <table className="table" style={{fontSize:'14px'}}>
                             <tbody> 
-                                  <tr><th style={{color: '#444'}}>Junction Status</th><td style={{color: '#444'}} >  <Label color={(!onlineJunction(m)  && 'error') || 'success'}>{onlineJunction(m) ? 'Online' : 'Offline'}</Label></td></tr>
-                                  <tr><th style={{color: '#444'}}>Inverter Status</th><td style={{color: '#444'}} >  <Label color={(!onlineInverter(m)  && 'error') || 'success'}>{onlineInverter(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                                  <tr><th style={{color: '#444'}}>Junction Status</th><td style={{color: '#444'}} >  <Label color={(!onlineJunction(m)  && 'error') || 'success'}>{onlineJunction(m) ? 'onlineJunction' : 'Offline'}</Label></td></tr>
+                                  <tr><th style={{color: '#444'}}>Inverter Status</th><td style={{color: '#444'}} >  <Label color={(!onlineInverter(m)  && 'error') || 'success'}>{onlineInverter(m) ? 'onlineJunction' : 'Offline'}</Label></td></tr>
                                 <tr><th style={{color: '#444'}}>DCV</th><td style={{color: '#444'}}>{m.DVC}</td></tr>
                                 <tr><th style={{color: '#444'}}>DCI</th><td style={{color: '#444'}}>{m.DCI}</td></tr>
                                 <tr><th style={{color: '#444'}}>ACV</th><td style={{color: '#444'}}>{m.AVC}</td></tr>
@@ -388,8 +388,8 @@ const getLabel = () => {
                                 {MachineType!=="Vending" ?<tr id="itemsBurntRow" ><th style={{color: '#444'}}>Items Burnt</th><td style={{color: '#444'}} >{m.doorCurrent} <span className="text-muted ">[ {amountText(m.doorLife + m.doorCurrent)} ]</span></td></tr>:""}
                                  {MachineType!=="Vending" ?<tr id="burningCyclesRow"><th style={{color: '#444'}}>Burning Cycles</th><td style={{color: '#444'}}>{m.burnCycleCurrent} <span className="text-muted ">[ {amountText(m.burnCycleLife + m.burnCycleCurrent)} ]</span></td></tr>:""} */}
                         
-                                <tr><th style={{color: '#444'}}>On Since</th><td style={{color: '#444'}}>{moment.utc((m.lastOnTime || m.lastHeartBeatTime).replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a')}</td></tr>
-                               <tr ><th style={{color: '#444'}}>Last Online At</th><td style={{color: '#444'}}>{m.lastHeartBeatTime ? moment.utc(m.lastHeartBeatTime.replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
+                                <tr><th style={{color: '#444'}}>On Since</th><td style={{color: '#444'}}>{m.lastHeartBeatTime ? moment.utc((m.lastOnTime || m.lastHeartBeatTime).replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a'):'NA'}</td></tr>
+                               <tr ><th style={{color: '#444'}}>Last onlineJunction At</th><td style={{color: '#444'}}>{m.lastHeartBeatTime ? moment.utc(m.lastHeartBeatTime.replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
                             </tbody>
                         </table>
       </Popover>

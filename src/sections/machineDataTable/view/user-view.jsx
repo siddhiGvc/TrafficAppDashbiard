@@ -1,4 +1,4 @@
-import $ from 'jquery';
+// import $ from 'jquery';
 import {useState, useEffect} from 'react';
 
 import Card from '@mui/material/Card';
@@ -12,7 +12,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 // import { users } from 'src/_mock/user';
-import {GetClentNameDetails} from 'src/_mock/customers';
+// import {GetClentNameDetails} from 'src/_mock/customers';
 
 import Scrollbar from 'src/components/scrollbar';
 
@@ -44,7 +44,7 @@ export default function UserPage() {
 
   const [data,setData]=useState([])
 
-  const [machineType,setMachineType]=useState('');
+  const [machineType]=useState('');
  
 
   // getting data from Redux/store
@@ -55,41 +55,41 @@ export default function UserPage() {
   });
 
   useEffect(()=>{
-    const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
-    const Obj={
-     clientName:UserInfo.clientName
-    }
-   GetClentNameDetails(Obj).then((r)=>{
-     // const MachineType=r.data[0].MachineType
-     const [{ MachineType }] = r.data;
-     const Data=r.data;
-     $('.CInfo1').text(Data[0].CInfo1);
-     if(Data[0].CInfo1===''){
-        $('.City').remove();
-     }
-     $('.CInfo2').text(Data[0].CInfo2);
-      if(Data[0].CInfo2===''){
-        $('.Zone').remove();
-     }
-     $('.CInfo3').text(Data[0].CInfo3);
-      if(Data[0].CInfo3===''){
-        $('.Ward').remove();
-     }
-     $('.CInfo4').text(Data[0].CInfo4);
-      if(Data[0].CInfo4===''){
-        $('.Beat').remove();
-     }
-     if(MachineType==="Incinerator")
-     {
-       $('.vending').remove();
-     }
-     else if(MachineType==="Vending")
-     {
-       $('.incinerator').remove();
-     }
-     setMachineType(MachineType);
+  //   const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+  //   const Obj={
+  //    clientName:UserInfo.clientName
+  //   }
+  //  GetClentNameDetails(Obj).then((r)=>{
+  //    // const MachineType=r.data[0].MachineType
+  //    const [{ MachineType }] = r.data;
+  //    const Data=r.data;
+  //    $('.CInfo1').text(Data[0].CInfo1);
+  //    if(Data[0].CInfo1===''){
+  //       $('.City').remove();
+  //    }
+  //    $('.CInfo2').text(Data[0].CInfo2);
+  //     if(Data[0].CInfo2===''){
+  //       $('.Zone').remove();
+  //    }
+  //    $('.CInfo3').text(Data[0].CInfo3);
+  //     if(Data[0].CInfo3===''){
+  //       $('.Ward').remove();
+  //    }
+  //    $('.CInfo4').text(Data[0].CInfo4);
+  //     if(Data[0].CInfo4===''){
+  //       $('.Beat').remove();
+  //    }
+  //    if(MachineType==="Incinerator")
+  //    {
+  //      $('.vending').remove();
+  //    }
+  //    else if(MachineType==="Vending")
+  //    {
+  //      $('.incinerator').remove();
+  //    }
+  //    setMachineType(MachineType);
 
-   })
+  //  })
 
   },[])
 

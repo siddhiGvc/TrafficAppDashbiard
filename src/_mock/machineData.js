@@ -1,17 +1,17 @@
 // import { useRouter } from 'src/routes/hooks';
 
-const API = 'http://165.232.180.111:8080';
+const API = import.meta.env.VITE_REACT_APP_API;
 
-export const fetchData=async()=> {
+export const fetchData=async(city)=> {
   
   try {
     const headers = new Headers({
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`${API}/trafficLights/getAllJunstion`, { method: 'GET', headers });
+    const response = await fetch(`${API}/add/getData?city=${city.join()}`, { method: 'GET', headers });
     const json = await response.json();
     // console.log(json);
-    return json;
+    return json.data;
   } catch (error) {
     console.error('Error fetching data:', error);
     

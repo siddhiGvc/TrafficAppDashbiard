@@ -32,9 +32,9 @@ function FieldSelection({ sx, ...other }) {
     // console.log(UserInfo);
     if (!UserInfo.isAdmin) {
                                       
-      if (UserInfo.city){
+      if (UserInfo.City){
         
-       const Cities=(UserInfo.city).split(',')
+       const Cities=(UserInfo.City).split(',')
         setCitiesName(Cities);
         setCities(Cities);
         sessionStorage.setItem("cities",JSON.stringify(Cities));
@@ -51,52 +51,52 @@ function FieldSelection({ sx, ...other }) {
     sessionStorage.setItem("cities",JSON.stringify(Cities));
 
   }
-  if(UserInfo.clientName)
-  {
-    // const obj={
-    //   clientName:UserInfo.clientName
-    // }
-    //  GetClentInfoDetails(obj).then((r)=>{
-    //     //  console.log(r);
-    //      setCities([]);
-    //      setCitiesName([]);
-    //      const cityArray=[];
-    //        r.data.map((elem)=>
-    //         cityArray.push(elem.City)
-    //        )
-    //        setCities(cityArray);
-    //        setCitiesName(cityArray)
-    //  })
+  // if(UserInfo.clientName)
+  // {
+  //   const obj={
+  //     clientName:UserInfo.clientName
+  //   }
+  //    GetClentInfoDetails(obj).then((r)=>{
+  //       //  console.log(r);
+  //        setCities([]);
+  //        setCitiesName([]);
+  //        const cityArray=[];
+  //          r.data.map((elem)=>
+  //           cityArray.push(elem.City)
+  //          )
+  //          setCities(cityArray);
+  //          setCitiesName(cityArray)
+  //    })
 
-    //  GetClentNameDetails(obj).then((r)=>{
-    //     //  console.log(r);
-    //      const Data=r.data;
-    //      $('.CInfo1').text(Data[0].CInfo1);
-    //      if(Data[0].CInfo1===''){
-    //         $('.City').remove();
-    //      }
-    //      $('.CInfo2').text(Data[0].CInfo2);
-    //       if(Data[0].CInfo2===''){
-    //         $('.Zone').remove();
-    //      }
-    //      $('.CInfo3').text(Data[0].CInfo3);
-    //       if(Data[0].CInfo3===''){
-    //         $('.Ward').remove();
-    //      }
-    //      $('.CInfo4').text(Data[0].CInfo4);
-    //       if(Data[0].CInfo4===''){
-    //         $('.Beat').remove();
-    //      }
-    //       setCInfo([]);
-    //       const CInfos=[];
-    //        CInfos.push(r.data[0].CInfo1);
-    //        CInfos.push(r.data[0].CInfo2);
-    //        CInfos.push(r.data[0].CInfo3);
-    //        CInfos.push(r.data[0].CInfo4);
+  //    GetClentNameDetails(obj).then((r)=>{
+  //       //  console.log(r);
+  //        const Data=r.data;
+  //        $('.CInfo1').text(Data[0].CInfo1);
+  //        if(Data[0].CInfo1===''){
+  //           $('.City').remove();
+  //        }
+  //        $('.CInfo2').text(Data[0].CInfo2);
+  //         if(Data[0].CInfo2===''){
+  //           $('.Zone').remove();
+  //        }
+  //        $('.CInfo3').text(Data[0].CInfo3);
+  //         if(Data[0].CInfo3===''){
+  //           $('.Ward').remove();
+  //        }
+  //        $('.CInfo4').text(Data[0].CInfo4);
+  //         if(Data[0].CInfo4===''){
+  //           $('.Beat').remove();
+  //        }
+  //         setCInfo([]);
+  //         const CInfos=[];
+  //          CInfos.push(r.data[0].CInfo1);
+  //          CInfos.push(r.data[0].CInfo2);
+  //          CInfos.push(r.data[0].CInfo3);
+  //          CInfos.push(r.data[0].CInfo4);
 
-    //        setCInfo(CInfos)
-    //  })
-  }
+  //          setCInfo(CInfos)
+  //    })
+  // }
 
 
   },[])

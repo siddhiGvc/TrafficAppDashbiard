@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import Select from 'react-select';
-import React, { useState,useEffect,} from 'react';
+// import Select from 'react-select';
+import React, { useState,useEffect} from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -16,7 +16,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 import { GetClentNameDetails} from 'src/_mock/customers';
-import { mapping,AllMachines} from 'src/_mock/AllMachines';
+import {mapping, AllMachines} from 'src/_mock/AllMachines';
 
 import Scrollbar from 'src/components/scrollbar';
 
@@ -26,6 +26,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+// import label from 'src/components/label';
 
 
 const Alert = React.forwardRef((props, ref) => (
@@ -50,8 +51,8 @@ const style = {
 
 export default function MachinePage() {
   const[machines,setMachines]=useState([]);
-  const [selectedOption, setSelectedOption] = useState([]);
-  const [options,setOptions]=useState([]);
+  // const [selectedOption] = useState([]);
+  // const [setOptions]=useState([]);
   const [cInfo,setCInfo]=useState(["City","Zone","Ward","Beat"]);
   
   const [page, setPage] = useState(0);
@@ -92,13 +93,48 @@ export default function MachinePage() {
   };
   const handleModalClose = () => {
     setOpenModal(false);
-    setTimeout(()=>{
-      $('[name="machine"]').val('').trigger('change');
-      $('[name="uid"]').val('').trigger('change');
-      $('[name="city"]').val('Mumbai').trigger('change');
-      $('[name="installedOn"]').val('').trigger('change');
-    },200)
+    // setTimeout(()=>{
+    //   $('[name="machine"]').val('').trigger('change');
+    //   $('[name="uid"]').val('').trigger('change');
+    //   $('[name="city"]').val('Mumbai').trigger('change');
+    //   $('[name="zone"]').val('').trigger('change');
+    //   $('[name="ward"]').val('Mumbai').trigger('change');
+    //   $('[name="eat"]').val('Mumbai').trigger('change');
+    //   $('[name="adress"]').val('Mumbai').trigger('change');
+    //   $('[name="installedOn"]').val('').trigger('change');
+    // },200)
   };
+
+
+  
+  // input machines list loading function
+  // const LoadMachineNameDDL = useCallback(async() => {
+  //   console.log("select2function started");
+  
+  //   // Use Promise.all() to fetch data from AllMachines() API
+  //   AllMachines()
+  //     .then(response => {
+  //       console.log(response);
+  //       const data = response;
+  
+  //       // Transform data into the format expected by Select2
+  //       const formattedData = data.data.map(option => ({
+  //         value: option.UID,
+  //         h3: option.UID
+  //       }));
+  
+  //       // Set the options for the dropdown
+  //       setOptions(formattedData);
+  
+  //       // Cleanup Select2 when the component unmounts
+  //       return () => {
+  //         $('#to').select2('destroy');
+  //       };
+  //     })
+  //     .catch(error => {
+  //       console.error('Error loading data:', error);
+  //     });
+  // },[setOptions]);
 
 
 
@@ -109,7 +145,7 @@ export default function MachinePage() {
     // getting data from fecthData function
     AllMachines().then((res)=>{
     
-      setMachines(res.data);
+      setMachines(res.data.reverse());
     })
     if(UserInfo.clientName)
   {
@@ -132,74 +168,68 @@ export default function MachinePage() {
      })
   }
 
-    LoadMachineNameDDL();
+    // LoadMachineNameDDL();
   },[])
 
 
-  // input machines list loading function
-  const LoadMachineNameDDL = () => {
-    console.log("select2function started");
-  
-    // Use Promise.all() to fetch data from AllMachines() API
-    AllMachines()
-      .then(response => {
-        console.log(response);
-        const data = response;
-  
-        // Transform data into the format expected by Select2
-        const formattedData = data.data.map(option => ({
-          value: option.UID,
-          label: option.UID
-        }));
-  
-        // Set the options for the dropdown
-        setOptions(formattedData);
-  
-        // Cleanup Select2 when the component unmounts
-        return () => {
-          $('#to').select2('destroy');
-        };
-      })
-      .catch(error => {
-        console.error('Error loading data:', error);
-      });
-  };
   
 
 //  createMapping submit form function
   const SubmitForm=()=>{
    const obj={
-    machine: selectedOption.value,
-    uid: $('[name="uid"]').val(),
-    city: $('[name="city"]').val(),
-    installedOn: $('[name="installedOn"]').val(),
+ 
+    Uid: $('[name="machine"]').val(),
+    City: $('[name="city"]').val(),
+    Location: $('[name="zone"]').val(),
+    ward: $('[name="ward"]').val(),
+    beat: $('[name="beat"]').val(),
+    address: $('[name="address"]').val(),
+    Lat:sessionStorage.getItem("Lattitude"),
+    Long:sessionStorage.getItem("Longitude")
+    
    }
    
-   if (!obj.machine) {
-    showAlertMessage();
-    setType("warning");
-    setMessage("Invalid Machine Number") 
-     
-     }
-   else if (!obj.uid) { 
+ if (!obj.Uid) { 
     showAlertMessage();
     setType("warning");
     setMessage("Invalid Uid") 
      
   }
-   else if (!obj.city) {
+   else if (!obj.City) {
 
     showAlertMessage();
     setType("warning");
     setMessage("Please select city") 
     }
-   else if (!obj.installedOn) {
-    showAlertMessage();
-    setType("warning");
-    setMessage("Please seclect date") 
-    }
+    else if (!obj.Location) {
+
+      showAlertMessage();
+      setType("warning");
+      setMessage("Please select zone") 
+      }
+      else if (!obj.ward) {
+
+        showAlertMessage();
+        setType("warning");
+        setMessage("Please select ward") 
+     }
+     else if (!obj.beat) {
+
+      showAlertMessage();
+      setType("warning");
+      setMessage("Please select beat") 
+      }
+
+      else if (!obj.address) {
+
+        showAlertMessage();
+        setType("warning");
+        setMessage("Please select address") 
+        }
+ 
     else{
       mapping(obj).then((r)=>{
+        console.log(r);
         showAlertMessage();
         setType("success");
         setMessage("Successfully Created") ;
@@ -207,13 +237,7 @@ export default function MachinePage() {
       })
     }
    
-   
-   
-  
-
-
-
-  }
+   }
  
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -251,9 +275,9 @@ export default function MachinePage() {
   };
 
 
-  const handleSelectChange = (elem) => {
-    setSelectedOption(elem);
-  };
+  // const handleSelectChange = (elem) => {
+  //   setSelectedOption(elem);
+  // };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -301,8 +325,7 @@ export default function MachinePage() {
       {/* createMapping button */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Machines</Typography>
-        <button type='button' className="btn btn-sm btn-warning mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>Create
-                        Mapping</button>
+        <button type='button' className="btn btn-sm btn-success mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>Add Device</button>
 
         {/* <Button variant="contained" color="inherit"  onClick={handleOpenMenu} startIcon={<Iconify icon="eva:plus-fill" />}>
           New User
@@ -343,8 +366,8 @@ export default function MachinePage() {
                   { id: 'zone', label: `${cInfo[1]}` },
                   { id: 'ward', label: `${cInfo[2]}` },
                   { id: 'beat', label: `${cInfo[3]}` },
-                  // { id: 'ward', label: 'Verified', align: 'center' },
-                  // { id: 'city', label: 'Status' },
+                  // { id: 'ward', h3: 'Verified', align: 'center' },
+                  // { id: 'city', h3: 'Status' },
                   { id: '' },
                 ]}
               />
@@ -395,64 +418,74 @@ export default function MachinePage() {
     <Modal
         open={openModal}
         onClose={handleModalClose}
-        aria-labelledby="parent-modal-title"
+     
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: 500 }}>
-        <div className="modal-dialog" role="document">
+      
+      <div className="modal-dialog" role="document">
         <div className="modal-content">
             <div className="modal-header">
-                <h5 className="modal-title">Create Mapping</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" onClick={handleModalClose}>&times;</span>
+                <h5 className="modal-title">ADD NEW DEVICE</h5>
+                <button type="button" className="close" data-dismiss="modal" onClick={handleModalClose}>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div className="modal-body">
                 <div className="row">
                     <div className="col-md-6">
                         <div className="form-group my-2">
-                            <h6>UID:</h6>
-                            <Select
-                                name="machine"
-                                value={selectedOption}
-                                onChange={handleSelectChange}
-                                options={options}
-                                isSearchable // Equivalent to isSearchable={true}
-                                placeholder="Select option..."
-                            />
-                            {/* <input type="text" className="form-control" name="machine" /> */}
+                            <h6>Junction</h6>
+                            <input type="text" className="form-control" name="machine" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>City</h6>
+                            <input type="text" className="form-control" name="city" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                 
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>Zone</h6>
+                            <input type="text" className="form-control" name="zone" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>Ward</h6>
+                            <input type="text" className="form-control" name="ward" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>Beat</h6>
+                            <input type="text" className="form-control" name="beat" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                     <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>Address</h6>
+                            <input type="text" className="form-control" name="address" />
                             <div className="invalid-feedback"/>
                         </div>
                     </div>
                   
-                    <div className="col-md-6">
-                        <div className="form-group my-2">
-                            <h6>City:</h6>
-                            <select className="form-control" name="city">
-                                <option value="Mumbai" selected>Mumbai</option>
-                                <option value="Delhi">Delhi</option>
-                                <option value="SS-UK">SS-UK</option>
-                                <option value="DoE-HAR">DoE-HAR</option>
-
-                            </select>
-                            <div className="invalid-feedback"/>
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="form-group my-2">
-                            <h6>Location:</h6>
-                            <input className="form-control" type="date" name="installedOn" />
-                            <div className="invalid-feedback"/>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={SubmitForm}>Save changes</button>
+                <button type="button" className="btn btn-primary" onClick={SubmitForm}>Add Device</button>
                 <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleModalClose}>Close</button>
             </div>
         </div>
     </div>
+    
 
         </Box>
         </Modal>

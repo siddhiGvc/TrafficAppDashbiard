@@ -108,7 +108,7 @@ export default function Map({center,locations,MachineType}){
     //  let Status;
      let StatusLight;
      let StatusInverter;
-     const st=moment().diff(moment.utc((location.data.lastHeartBeatTime || location.data.lastOnTime).replace('Z', '')), 'minute') < 5;
+    //  const st=moment().diff(moment.utc((location.data.lastHeartBeatTime || location.data.lastOnTime).replace('Z', '')), 'minute') < 5;
      const stLight=location.data.light_status==="Online";
      const stInverter=location.data.inverter_status==="Online";;
      if(stLight && stInverter)
@@ -167,10 +167,10 @@ export default function Map({center,locations,MachineType}){
          <tr>
            <th style="color: #444">On Since</th>
            <td style="color: #444">
-             ${moment.utc((location.data.lastOnTime || location.data.lastHeartBeatTime).replace('Z', '')).local().format('DD-MMM-YYYY<br/>hh:mm a')}
+             ${location.data.lastHeartBeatTime ? moment.utc((location.data.lastOnTime || location.data.lastHeartBeatTime).replace('Z', '')).local().format('DD-MMM-YYYY<br/>hh:mm a'):'NA'}
            </td>
          </tr>
-         <tr class="${st ? 'd-none' : ''}">
+         <tr class="${stLight ? 'd-none' : ''}">
            <th style="color: #444">Last Online At</th>
            <td style="color: #444">
              ${location.data.lastHeartBeatTime ? moment.utc(location.data.lastHeartBeatTime.replace('Z', '')).local().format('DD-MMM-YYYY<br/>hh:mm a') : 'NA'}

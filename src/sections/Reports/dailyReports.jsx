@@ -56,8 +56,8 @@ export default function DailyReports(){
                                       
       if (UserInfo.city)
         //  console.log("user cities:" + typeof(window.appuser.city));
-      console.log(UserInfo.city);
-         const Cities=(UserInfo.city).split(',')
+      console.log(UserInfo.City);
+         const Cities=(UserInfo.City).split(',')
         setCitiesName(Cities);
         setCities(Cities);
         sessionStorage.setItem("cities",JSON.stringify(Cities));

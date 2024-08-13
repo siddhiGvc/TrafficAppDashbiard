@@ -10,8 +10,7 @@ import Label from 'src/components/label';
 import '../../app.css';
 import Selection from './selection';
 
-
-
+const API = import.meta.env.VITE_REACT_APP_API;
 
 
 export default function TraficLightsView (){
@@ -40,7 +39,7 @@ export default function TraficLightsView (){
   const onlineInverter = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
   
   const getLightData=useCallback(async()=>{
-    fetch('http://gvc.co.in:8080/trafficLights/getLights', {
+    fetch(`${API}/trafficLights/getLights`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -73,7 +72,7 @@ export default function TraficLightsView (){
   },[setActiveLight1,setActiveLight2,setActiveLight3,setActiveLight4,setLightStatus,selectedJunction])
 
   const getAllJunctions=useCallback(async()=>{
-    fetch('http://gvc.co.in:8080/trafficLights/getAllJunstion')
+    fetch(`${API}/trafficLights/getAllJunstion`)
     .then(response => response.json())  // Convert the response to JSON
     .then(data => {
       console.log(data);
@@ -91,7 +90,7 @@ export default function TraficLightsView (){
   },[setJunctions])
 
   const fetchInverterStatus = useCallback(async() => {
-    fetch('http://gvc.co.in:8080/trafficLights/getInverterStatus', {
+    fetch(`${API}/trafficLights/getInverterStatus`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -171,7 +170,7 @@ export default function TraficLightsView (){
     useEffect(() => {
       if(isChecked && activeLight1.length>0 && activeLight2.length>0 && activeLight3.length>0 && activeLight4.length>0)
       {
-      fetch('http://gvc.co.in:8080/trafficLights/setLights',{
+      fetch(`${API}/trafficLights/setLights`,{
         method:'POST',
         headers:{
           "Content-type":"application/json"

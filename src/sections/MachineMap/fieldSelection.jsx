@@ -1,4 +1,4 @@
-// import $ from 'jquery';
+import $ from 'jquery';
 import PropTypes from 'prop-types';
 import React, {  useState, useEffect} from 'react';
 
@@ -12,7 +12,7 @@ import {zoneData,wardData,beatData,getAllData } from 'src/_mock/fildData';
 // import { GetClentInfoDetails,GetClentNameDetails} from 'src/_mock/customers';
 
 function FieldSelection({ sx, ...other }) {
-  const [cities] = useState(['Mumbai']);
+  const [cities,setCities] = useState(['Mumbai']);
   const [zones,setZones]=useState([]);
   const [wards,setWards]=useState([]);
   const [beats,setBeats]=useState([]);
@@ -25,23 +25,23 @@ function FieldSelection({ sx, ...other }) {
   // Other state variables for stock status, burn status, door status, etc.
 
 
-  // useEffect(()=>{
-  //   const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+  useEffect(()=>{
+    const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
   
-  //   console.log(UserInfo);
-  //   if (!UserInfo.isAdmin) {
+    console.log(UserInfo);
+    if (!UserInfo.isAdmin) {
                                       
-  //     if (UserInfo.city){
+      if (UserInfo.City){
         
-  //      const Cities=(UserInfo.city).split(',')
-  //       setCitiesName(Cities);
-  //       setCities(Cities);
-  //       sessionStorage.setItem("cities",JSON.stringify(Cities));
-  //       $('#city').remove();
-  //     }
+       const Cities=(UserInfo.City).split(',')
+        setCitiesName(Cities);
+        setCities(Cities);
+        sessionStorage.setItem("cities",JSON.stringify(Cities));
+        $('#city').remove();
+      }
 
        
-  // }
+  }
   // if(UserInfo.clientName)
   // {
   //   const obj={
@@ -90,7 +90,7 @@ function FieldSelection({ sx, ...other }) {
   // }
   
 
-  // },[])
+  },[])
  
  
  useEffect(()=>{

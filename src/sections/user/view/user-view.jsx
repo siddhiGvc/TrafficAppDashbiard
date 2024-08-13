@@ -157,7 +157,7 @@ export default function UserPage() {
  const LoadUsers=()=>{
   fetchUsers().then((res)=>{
     
-    setUsers(res);
+    setUsers(res.reverse());
   })
  }
 
