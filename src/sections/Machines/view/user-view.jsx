@@ -324,7 +324,7 @@ export default function MachinePage() {
     <Container maxWidth="xxl">
       {/* createMapping button */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Machines</Typography>
+        <Typography variant="h4">Traffic Junctions</Typography>
         <button type='button' className="btn btn-sm btn-success mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>Add Device</button>
 
         {/* <Button variant="contained" color="inherit"  onClick={handleOpenMenu} startIcon={<Iconify icon="eva:plus-fill" />}>

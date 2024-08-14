@@ -165,7 +165,7 @@ export default function MachineMapView() {
   return (
     <Container maxWidth='xxl'>
         <Typography variant="h4" sx={{ mb: 5 }}>
-        Machine Map
+        Traffic Lights Map
       </Typography>
      <Grid container spacing={2} maxWidth='xxl'>
         {/* all status selection ui machine status ,burn status, stock sttaus, door status in StatusSelection component */}
