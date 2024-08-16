@@ -168,6 +168,7 @@ export default function TraficLightsView (){
   
 
     useEffect(() => {
+      console.log(activeLight1);
       if(isChecked && activeLight1.length>0 && activeLight2.length>0 && activeLight3.length>0 && activeLight4.length>0)
       {
       fetch(`${API}/trafficLights/setLights`,{

@@ -108,47 +108,50 @@ export default function SideBar(){
                  {/* <li className="mt-1">
                      <NavItem  path="/inventory" icon={ <i className="fa-solid fa-hand-holding-dollar" />} title='Inventory'/>
                   </li> */}
+                    <li  className="ra mt-0">
+                            <NavItem  path="/loginLogs" icon={ <i className="fa-solid fa-arrow-right-to-bracket" />} title='Login Logs'/>
+                            </li>
                   <li>
                   <a className="mt-3" role="button" tabIndex={0} onClick={OpenLocationMap}   onKeyPress={handleKeyPress}>
                   <NavItem  icon={ <i className="fa-solid fa-globe" />} title={`${sessionStorage.getItem("Lattitude")},${sessionStorage.getItem("Longitude")}`}/>
                   </a>
                   </li>
                  
+                
                  
-                 
-                 <li className="nav-item dropdown mt-1">
+                 {/* <li className="nav-item dropdown mt-1">
                     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Reports
                     </a>
                     <div className="dropdown-menu row direction-col" aria-labelledby="navbarDropdown" >
                         <ul>
-                           {/* <li className="mt-0">
+                           <li className="mt-0">
                              <NavItem  color='#343957' path="/dailyReports" icon={ <i className="fa-regular fa-file-lines"/>} title='Daily Reports'/>
-                           </li> */}
+                           </li>
                            <li  className="ra mt-0">
                             <NavItem color='#343957' path="/loginLogs" icon={ <i className="fa-solid fa-arrow-right-to-bracket" />} title='Login Logs'/>
                             </li>
-                            {/* <li className="ra mt-0">
+                            <li className="ra mt-0">
                              <NavItem  color='#343957' path="/svLogs" icon={   <i className="fa-solid fa-chart-simple"/>} title='SV Logs'/>
-                             </li> */}
-                             {/* <li className="ra mt-0">
+                             </li>
+                             <li className="ra mt-0">
                            <NavItem  color='#343957' path="/lockLogs" icon={ <i className="fa-solid fa-road-lock" />} title='Lock Logs'/>
-                           </li> */}
-                           {/* <li className="ra mt-0">
+                           </li>
+                           <li className="ra mt-0">
                              <NavItem  color='#343957' path="/paytmTransactions" icon={  <i className="fa-solid fa-credit-card" />} title='Paytm Transactions'/>
-                             </li> */}
-                             {/* <li className="ra mt-0">
+                             </li>
+                             <li className="ra mt-0">
                             <NavItem  color='#343957' path="/hourlyReport" icon={ <i className="fa-solid fa-clock" />} title='Hourly Report'/>
-                            </li> */}
-                            {/* <li className="mt-0">
+                            </li>
+                            <li className="mt-0">
                              <NavItem  color='#343957' path="/faultReport" icon={ <i className="fa-solid fa-wrench" />} title='Technician Report'/>
-                             </li> */}
-                             {/* <li className="ra mt-0">
+                             </li>
+                             <li className="ra mt-0">
                              <NavItem  color='#343957' path="/ssnReport" icon={ <i className="fa-solid fa-list-ol"/>} title='SSN Report'/>
-                             </li> */}
+                             </li>
                     </ul>
                     </div>
-                </li> 
+                </li>  */}
                 {/* <li className="nav-item dropdown mt-1">
                     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Settings

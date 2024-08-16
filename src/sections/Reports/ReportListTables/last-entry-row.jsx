@@ -2,7 +2,7 @@ import moment from "moment";
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Stack from '@mui/material/Stack';
+// import Stack from '@mui/material/Stack';
 // import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
@@ -55,12 +55,11 @@ export default function LastEntryTableRow({
         </TableCell>
 
         <TableCell component="th" scope="row" padding="none" align="center">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            {/* <Avatar alt={name} src="" /> */}
+        
             <Typography variant="subtitle2" noWrap>
               {row.userName}
             </Typography>
-          </Stack>
+        
         </TableCell>
 
       

@@ -2,7 +2,7 @@ import moment from "moment";
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Stack from '@mui/material/Stack';
+// import Stack from '@mui/material/Stack';
 // import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
@@ -50,27 +50,26 @@ export default function UserTableRow({
         {/* <TableCell padding="checkbox">
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell> */}
-        <TableCell align="center">
+        <TableCell align="center" sx={{textAlign:'center'}}>
            {sr}
         </TableCell>
 
         <TableCell component="th" scope="row" padding="none" align="center">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            {/* <Avatar alt={name} src="" /> */}
-            <Typography variant="subtitle2" noWrap>
+         
+            <Typography sx={{textAlign:'center'}} variant="subtitle2" noWrap>
               {name}
             </Typography>
-          </Stack>
+    
         </TableCell>
 
       
-       <TableCell onClick={()=>handleClick(row.loginLat,row.loginLong)} sx={{textAlign:'center'}}>
+       <TableCell onClick={()=>handleClick(row.loginLat,row.loginLong)} sx={{textAlign:'center'}} align="center">
        <i className="fa-solid fa-globe" style={{color: 'blue',cursor: 'pointer'}} /> {row.loginLat}  {row.loginLong }
        </TableCell>
      
-        <TableCell align="center">{row.deviceModel}</TableCell>
+        {/* <TableCell align="center">{row.deviceModel}</TableCell>
         <TableCell align="center">{row.Remark}</TableCell>
-        <TableCell align="center">{row.MachineNumber}</TableCell>
+        <TableCell align="center">{row.MachineNumber}</TableCell> */}
         <TableCell align="center">{moment(row.createdAt).format('DD-MMM-YYYY:HH-mm')}</TableCell>
       
 
@@ -81,11 +80,11 @@ export default function UserTableRow({
           <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
         </TableCell> */}
 
-        <TableCell align="right">
-          {/* <IconButton onClick={handleOpenMenu}>
+        {/* <TableCell align="right">
+          <IconButton onClick={handleOpenMenu}>
             <Iconify icon="eva:more-vertical-fill" />
-          </IconButton> */}
-        </TableCell>
+          </IconButton>
+        </TableCell> */}
       </TableRow>
 
       <Popover
