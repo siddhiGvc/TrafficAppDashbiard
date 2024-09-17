@@ -8,6 +8,7 @@ import LockLogs from 'src/sections/Reports/lockLogs';
 import LoginLogs from 'src/sections/Reports/loginLogs';
 import SSNReport from 'src/sections/Reports/ssnReport';
 import FaultReport from 'src/sections/Reports/faultReport';
+import { UserView } from 'src/sections/macAddressTable/view';
 import { ProductsView } from 'src/sections/MachineData/view';
 import SelfMap from 'src/sections/Reports/LoginMaps/selfMap';
 import ViewMap from 'src/sections/Reports/LoginMaps/viewMap';
@@ -17,10 +18,13 @@ import { TraficLightsView } from 'src/sections/TrafficLights';
 import ColorSetting from 'src/sections/Settings/colorSetting';
 import MachinePage from 'src/sections/Machines/view/user-view';
 import CustomerPage from 'src/sections/Customers/customerPage';
+import { TrafficTriple } from 'src/sections/trafficTriple/view';
 import InventoryPage from 'src/sections/Inventory/inventoryPage';
 import MachineSetting from 'src/sections/Settings/machineSetting';
 import PaytmTransactions from 'src/sections/Reports/paytmTransactions';
 import MachineMapView from 'src/sections/MachineMap/view/products-view';
+
+
 
 
 
@@ -75,7 +79,10 @@ export default function Router() {
         { path: 'svLogs', element: <SvLogs/>},
         { path: 'lockLogs', element: <LockLogs/>},
         { path: 'selfMap', element: <SelfMap/>},
-        { path: 'viewMap', element: <ViewMap/>}
+        { path: 'viewMap', element: <ViewMap/>},
+        { path: 'trafficTriple', element: <TrafficTriple/>},
+        { path: 'trafficSingle', element: <UserView/>},
+
       ],
     },
     {
